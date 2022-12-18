@@ -40,6 +40,9 @@ export function requestPassword(email: string) {
   })
 }
 
-export function getUserByToken() {
+export function getUserByToken(token: string | undefined) {
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = token
+  }
   return axios.get<UserModel>(GET_USER_BY_ACCESSTOKEN_URL)
 }

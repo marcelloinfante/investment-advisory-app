@@ -41,9 +41,11 @@ export function Login() {
     onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       try {
-        const {data: token} = await login(values.email, values.password)
+        const {
+          data: {token},
+        } = await login(values.email, values.password)
         saveAuth(token)
-        const {data} = await getUserByToken()
+        const {data} = await getUserByToken(token)
         setCurrentUser(data)
       } catch (error) {
         console.error(error)

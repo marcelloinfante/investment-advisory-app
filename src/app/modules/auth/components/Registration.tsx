@@ -55,15 +55,18 @@ export function Registration() {
     onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       try {
-        const {data: token} = await register(
+        const {
+          data: {token},
+        } = await register(
           values.email,
           values.firstname,
           values.lastname,
           values.password,
           values.changepassword
         )
+        console.log(token)
         saveAuth(token)
-        const {data} = await getUserByToken()
+        const {data} = await getUserByToken(token)
         setCurrentUser(data)
       } catch (error) {
         console.error(error)

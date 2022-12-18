@@ -8,6 +8,9 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react'
+import axios from 'axios'
+
+import {setupAxios} from './AuthHelpers'
 import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
 import {AuthModel, UserModel} from './_models'
 import * as authHelper from './AuthHelpers'
@@ -15,8 +18,8 @@ import {getUserByToken} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 
 type AuthContextProps = {
-  auth: AuthModel | undefined
-  saveAuth: (auth: AuthModel | undefined) => void
+  auth: string | undefined
+  saveAuth: (auth: string | undefined) => void
   currentUser: UserModel | undefined
   setCurrentUser: Dispatch<SetStateAction<UserModel | undefined>>
   logout: () => void
@@ -37,9 +40,9 @@ const useAuth = () => {
 }
 
 const AuthProvider: FC<WithChildren> = ({children}) => {
-  const [auth, setAuth] = useState<AuthModel | undefined>(authHelper.getAuth())
+  const [auth, setAuth] = useState<string | undefined>(authHelper.getAuth())
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
-  const saveAuth = (auth: AuthModel | undefined) => {
+  const saveAuth = (auth: string | undefined) => {
     setAuth(auth)
     if (auth) {
       authHelper.setAuth(auth)
@@ -69,7 +72,7 @@ const AuthInit: FC<WithChildren> = ({children}) => {
     const requestUser = async () => {
       try {
         if (!didRequest.current) {
-          const {data} = await getUserByToken()
+          const {data} = await getUserByToken(auth)
           if (data) {
             setCurrentUser(data)
           }
@@ -86,7 +89,7 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       return () => (didRequest.current = true)
     }
 
-    if (auth && auth.api_token) {
+    if (auth) {
       requestUser()
     } else {
       logout()
@@ -94,6 +97,10 @@ const AuthInit: FC<WithChildren> = ({children}) => {
     }
     // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    setupAxios(axios)
+  }, [auth])
 
   return showSplashScreen ? <LayoutSplashScreen /> : <>{children}</>
 }
