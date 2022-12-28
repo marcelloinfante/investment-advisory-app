@@ -25,10 +25,6 @@ const CreateAppModal = ({show, handleClose}: Props) => {
   const [data, setData] = useState<ICreateAppData>(defaultCreateAppData)
   const [hasError, setHasError] = useState(false)
 
-  const loadStepper = () => {
-    stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
-  }
-
   const updateData = (fieldsToUpdate: Partial<ICreateAppData>) => {
     const updatedData = {...data, ...fieldsToUpdate}
     setData(updatedData)
@@ -86,13 +82,12 @@ const CreateAppModal = ({show, handleClose}: Props) => {
 
   return createPortal(
     <Modal
-      id='kt_modal_create_app'
+      id='kt_modal_create_client'
       tabIndex={-1}
       aria-hidden='true'
       dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
-      onEntered={loadStepper}
       backdrop={true}
     >
       <div className='modal-header'>

@@ -39,8 +39,8 @@ export function Projects() {
       </div>
 
       <div className='row g-6 g-xl-9'>
-        <div className='col-md-6 col-xl-4'>
-          <Card2
+        {/* <div className='col-md-6 col-xl-4'> */}
+        {/* <Card2
             icon='/media/svg/brand-logos/plurk.svg'
             badgeColor='primary'
             status='In Progress'
@@ -172,7 +172,7 @@ export function Projects() {
             progress={100}
             users={users9}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className='d-flex flex-stack flex-wrap pt-10'>
