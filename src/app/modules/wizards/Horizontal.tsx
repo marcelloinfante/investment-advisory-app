@@ -4,8 +4,6 @@ import {Link, useLocation} from 'react-router-dom'
 const Horizontal: FC = () => {
   const {pathname} = useLocation()
 
-  console.log(pathname)
-
   let clientsClassName = 'pending cursor-not-allowed'
   let assetsClassName = 'pending cursor-not-allowed'
   let simulationsClassName = 'pending cursor-not-allowed'

@@ -5,7 +5,7 @@ import {ScrollTop} from './components/scroll-top'
 import {Content} from './components/content'
 import {FooterWrapper} from './components/footer'
 import {Sidebar} from './components/sidebar'
-import {Horizontal} from '../../app/modules/wizards/components/Horizontal'
+import {Horizontal} from '../../app/modules/wizards/Horizontal'
 
 import {ThemeModeProvider} from '../partials'
 import {PageDataProvider} from './core'
