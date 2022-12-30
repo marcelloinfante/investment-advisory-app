@@ -3,39 +3,32 @@ import {FC, useState, useEffect} from 'react'
 import {useIntl} from 'react-intl'
 import {PageTitle} from '../../../_metronic/layout/core'
 import {ClientHeader} from '../../../_metronic/partials'
-import {Card2} from '../../../_metronic/partials/content/cards/Card2'
 
 import {useInvestiment} from '../../context/Investiment'
-import {CreateClientModal} from '../../../_metronic/partials/modals/create-client/CreateClientModal'
+import {CreateAssetModal} from '../../../_metronic/partials/modals/create-asset/CreateAssetModal'
+
+import {TablesWidget11} from '../../../_metronic/partials/widgets'
 
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
-  const {currentClient, queryClients} = useInvestiment()
+  const {assets, queryAssets} = useInvestiment()
 
-  // useEffect(() => {
-  //   queryClients()
-  // }, [])
+  useEffect(() => {
+    queryAssets()
+  }, [])
 
   return (
     <>
       <ClientHeader />
-      <div className='d-flex flex-wrap flex-stack mb-6'>
-        <h3 className='fw-bolder my-2'>Ativos</h3>
 
-        <div className='d-flex flex-wrap my-2'>
-          <a
-            onClick={() => setShowModal(true)}
-            className='btn btn-primary btn-sm'
-            data-bs-toggle='modal'
-            data-bs-target='#kt_modal_create_client'
-          >
-            Adicionar Novo Ativo
-          </a>
-        </div>
-      </div>
+      <TablesWidget11
+        className='mb-5 mb-xl-8'
+        assets={assets}
+        openModal={() => setShowModal(true)}
+      />
 
-      <CreateClientModal show={showModal} handleClose={() => setShowModal(false)} />
+      <CreateAssetModal show={showModal} handleClose={() => setShowModal(false)} />
     </>
   )
 }
@@ -44,7 +37,7 @@ const ClientWrapper: FC = () => {
   const intl = useIntl()
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.USER'})}</PageTitle>
+      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.CLIENT'})}</PageTitle>
       <DashboardPage />
     </>
   )

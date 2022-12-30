@@ -19,10 +19,10 @@ const formatter = new Intl.NumberFormat('pt-BR', {
 })
 
 const Card2: FC<Props> = ({id, name, email, numberOfAssets, totalInCustody}) => {
-  const {setCurrentClient} = useInvestiment()
+  const {saveCurrentClient} = useInvestiment()
 
   const onClick = () => {
-    setCurrentClient({id, name, email, numberOfAssets, totalInCustody})
+    saveCurrentClient({id, name, email, numberOfAssets, totalInCustody})
   }
 
   return (
