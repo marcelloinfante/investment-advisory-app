@@ -13,6 +13,7 @@ export * from './layout/theme-mode/ThemeModeProvider'
 export * from './layout/theme-mode/ThemeModeSwitcher'
 export * from './content/content-header/UserHeader'
 export * from './content/content-header/ClientHeader'
+export * from './content/content-header/AssetHeader'
 
 // dropdpwns
 export * from './content/dropdown/Dropdown1'

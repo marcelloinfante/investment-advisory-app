@@ -4,6 +4,7 @@ import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {UserWrapper} from '../pages/user/UserWrapper'
 import {ClientWrapper} from '../pages/client/ClientWrapper'
+import {AssetWrapper} from '../pages/asset/AssetWrapper'
 import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
@@ -23,8 +24,9 @@ const PrivateRoutes = () => {
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='auth/*' element={<Navigate to='/user' />} />
         {/* Pages */}
-        <Route path='user' element={<UserWrapper />} />
-        <Route path='client' element={<ClientWrapper />} />
+        <Route path='clients' element={<UserWrapper />} />
+        <Route path='assets' element={<ClientWrapper />} />
+        <Route path='simulations' element={<AssetWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
         {/* Lazy Modules */}

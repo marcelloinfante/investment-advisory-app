@@ -1,5 +1,5 @@
 const CURRENT_CLIENT_LOCAL_STORAGE_KEY = 'current-client'
-const getClient = (): string | undefined => {
+const getClientFromLocalStorage = (): string | undefined => {
   if (!localStorage) {
     return
   }
@@ -19,7 +19,7 @@ const getClient = (): string | undefined => {
   }
 }
 
-const setClient = (client: string) => {
+const setClientFromLocalStorage = (client: string) => {
   if (!localStorage) {
     return
   }
@@ -32,7 +32,7 @@ const setClient = (client: string) => {
   }
 }
 
-const removeClient = () => {
+const removeClientFromLocalStorage = () => {
   if (!localStorage) {
     return
   }
@@ -44,4 +44,9 @@ const removeClient = () => {
   }
 }
 
-export {getClient, setClient, removeClient, CURRENT_CLIENT_LOCAL_STORAGE_KEY}
+export {
+  getClientFromLocalStorage,
+  setClientFromLocalStorage,
+  removeClientFromLocalStorage,
+  CURRENT_CLIENT_LOCAL_STORAGE_KEY,
+}

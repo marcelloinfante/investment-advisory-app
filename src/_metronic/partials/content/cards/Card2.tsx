@@ -6,7 +6,8 @@ import {useInvestiment} from '../../../../app/context/Investiment'
 
 type Props = {
   id: number
-  name: string
+  firstName: string
+  lastName: string
   email: string
   numberOfAssets: number
   totalInCustody: number
@@ -18,21 +19,28 @@ const formatter = new Intl.NumberFormat('pt-BR', {
   minimumFractionDigits: 2,
 })
 
-const Card2: FC<Props> = ({id, name, email, numberOfAssets, totalInCustody}) => {
+const Card2: FC<Props> = ({id, firstName, lastName, email, numberOfAssets, totalInCustody}) => {
   const {saveCurrentClient} = useInvestiment()
 
   const onClick = () => {
-    saveCurrentClient({id, name, email, numberOfAssets, totalInCustody})
+    saveCurrentClient({
+      id,
+      email,
+      last_name: lastName,
+      first_name: firstName,
+      total_in_custody: totalInCustody,
+      number_of_assets: numberOfAssets,
+    })
   }
 
   return (
     <Link
-      to='/client'
+      to='/assets'
       onClick={onClick}
       className='card border border-2 border-gray-300 border-hover'
     >
       <div className='card-body p-9'>
-        <div className='fs-3 fw-bolder text-dark'>{name}</div>
+        <div className='fs-3 fw-bolder text-dark'>{`${firstName} ${lastName}`}</div>
 
         <p className='text-gray-400 fw-bold fs-5 mt-1 mb-7'>{email}</p>
 

@@ -5,7 +5,10 @@ const CLIENTS_URL = `${API_URL}/clients`
 
 const getClients = () => axios.get(CLIENTS_URL).then((d: AxiosResponse) => d.data)
 
+const getClient = (clientId: string) =>
+  axios.get(`${CLIENTS_URL}/${clientId}`).then((d: AxiosResponse) => d.data)
+
 const addClient = (params: any) =>
   axios.post(CLIENTS_URL, params).then((d: AxiosResponse) => d.data)
 
-export {getClients, addClient}
+export {getClients, getClient, addClient}

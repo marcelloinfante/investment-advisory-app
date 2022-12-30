@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import {Link} from 'react-router-dom'
+import {KTSVG} from '../../../helpers'
+
+import {useInvestiment} from '../../../../app/context/Investiment'
 
 type Props = {
   className: string
@@ -9,6 +12,8 @@ type Props = {
 }
 
 const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
+  const {saveCurrentAsset} = useInvestiment()
+
   const currencyFormatter = (percentual: number) => {
     const formatter = new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -37,6 +42,10 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
     })
 
     return formatter.format(date)
+  }
+
+  const onClick = (asset: any) => {
+    saveCurrentAsset(asset)
   }
 
   return (
@@ -78,8 +87,8 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-              {assets?.map(
-                ({
+              {assets?.map((asset) => {
+                const {
                   code,
                   issuer,
                   rate_index,
@@ -88,78 +97,81 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                   volume_applied,
                   application_date,
                   expiration_date,
-                }) => {
-                  return (
-                    <tr>
-                      <td>
-                        <div className='ps-4 d-flex align-items-center'>
-                          <div className='d-flex justify-content-start flex-column'>
-                            <a href='#' className='text-dark fw-bold text-hover-primary mb-1 fs-6'>
-                              {code}
-                            </a>
-                          </div>
+                } = asset
+
+                return (
+                  <tr>
+                    <td onClick={() => onClick(asset)}>
+                      <div className='ps-4 d-flex align-items-center'>
+                        <div className='d-flex justify-content-start flex-column'>
+                          <Link
+                            to='/simulations'
+                            className='text-dark fw-bold text-hover-primary mb-1 fs-6'
+                          >
+                            {code}
+                          </Link>
                         </div>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {issuer}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {rate_index}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {percentualFormatter(entrance_rate)}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {quantity}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {currencyFormatter(volume_applied)}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {dateFormatter(application_date)}
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href='#'
-                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
-                        >
-                          {dateFormatter(expiration_date)}
-                        </a>
-                      </td>
-                    </tr>
-                  )
-                }
-              )}
+                      </div>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {issuer}
+                      </Link>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {rate_index}
+                      </Link>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {percentualFormatter(entrance_rate)}
+                      </Link>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {quantity}
+                      </Link>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {currencyFormatter(volume_applied)}
+                      </Link>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {dateFormatter(application_date)}
+                      </Link>
+                    </td>
+                    <td onClick={() => onClick(asset)}>
+                      <Link
+                        to='/simulations'
+                        className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                      >
+                        {dateFormatter(expiration_date)}
+                      </Link>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
             {/* end::Table body */}
           </table>

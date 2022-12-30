@@ -1,10 +1,20 @@
 import {FC, useState, createContext, useContext} from 'react'
 
 import {WithChildren} from '../../_metronic/helpers'
-import {getClients, addClient} from '../requests/clients'
-import {getAssets, addAsset} from '../requests/assets'
+import {getClients, getClient, addClient} from '../requests/clients'
+import {getAssets, getAsset, addAsset} from '../requests/assets'
 
-import {getClient, setClient, removeClient} from './helpers'
+import {
+  getClientFromLocalStorage,
+  setClientFromLocalStorage,
+  removeClientFromLocalStorage,
+} from '../local-storage/client'
+
+import {
+  getAssetFromLocalStorage,
+  setAssetFromLocalStorage,
+  removeAssetFromLocalStorage,
+} from '../local-storage/asset'
 
 const initInvestmentContextPropsState = {
   assets: [],
@@ -14,6 +24,7 @@ const initInvestmentContextPropsState = {
   queryClients: () => {},
   createClient: () => {},
   saveCurrentClient: () => {},
+  queryCurrentClient: () => {},
 }
 
 const InvestimentContext = createContext<any>(initInvestmentContextPropsState)
@@ -24,13 +35,19 @@ const useInvestiment = () => {
 
 const InvestimentProvider: FC<WithChildren> = ({children}) => {
   const [clients, setClients] = useState<any>([])
-  const [currentClient, setCurrentClient] = useState<any>(getClient)
+  const [currentClient, setCurrentClient] = useState<any>(getClientFromLocalStorage)
+  const [currentAsset, setCurrentAsset] = useState<any>(getAssetFromLocalStorage)
 
   const [assets, setAssets] = useState<any>([])
 
   const queryClients = async () => {
     const returnedClients = await getClients()
     setClients(returnedClients)
+  }
+
+  const queryCurrentClient = async () => {
+    const returnedClient = await getClient(currentClient.id)
+    saveCurrentClient(returnedClient)
   }
 
   const createClient = async (params: any) => {
@@ -41,10 +58,10 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
   const saveCurrentClient = (client: any) => {
     if (client) {
       setCurrentClient(client)
-      setClient(client)
+      setClientFromLocalStorage(client)
     } else {
       setCurrentClient(undefined)
-      removeClient()
+      removeClientFromLocalStorage()
     }
   }
 
@@ -53,9 +70,24 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
     setAssets(returnedAssets)
   }
 
+  const queryCurrentAsset = async () => {
+    const returnedAsset = await getAsset(currentAsset.id, currentClient.id)
+    saveCurrentAsset(returnedAsset)
+  }
+
   const createAsset = async (params: any) => {
     const newAsset = await addAsset(params)
     setAssets([...assets, newAsset])
+  }
+
+  const saveCurrentAsset = (asset: any) => {
+    if (asset) {
+      setCurrentAsset(asset)
+      setAssetFromLocalStorage(asset)
+    } else {
+      setCurrentAsset(undefined)
+      removeAssetFromLocalStorage()
+    }
   }
 
   return (
@@ -64,11 +96,15 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
         clients,
         assets,
         currentClient,
+        currentAsset,
         queryAssets,
         createAsset,
         queryClients,
         createClient,
         saveCurrentClient,
+        saveCurrentAsset,
+        queryCurrentAsset,
+        queryCurrentClient,
       }}
     >
       {children}

@@ -49,7 +49,8 @@ const DashboardPage: FC = () => {
               <div className='col-md-6 col-xl-4'>
                 <Card2
                   id={client.id}
-                  name={`${client?.first_name} ${client?.last_name}`}
+                  firstName={client?.first_name}
+                  lastName={client?.last_name}
                   email={client?.email}
                   numberOfAssets={client?.number_of_assets}
                   totalInCustody={client?.total_in_custody}

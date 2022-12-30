@@ -89,10 +89,10 @@ export function HeaderWrapper() {
                 data-kt-swapper-mode="{default: 'append', lg: 'prepend'}"
                 data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}"
               >
-                <Header />
+                {/* <Header /> */}
               </div>
             )}
-          <Navbar />
+          {/* <Navbar /> */}
         </div>
       </div>
     </div>

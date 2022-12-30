@@ -6,6 +6,8 @@ import {ScrollTop} from './components/scroll-top'
 import {Content} from './components/content'
 import {FooterWrapper} from './components/footer'
 import {Sidebar} from './components/sidebar'
+import {Horizontal} from '../../app/modules/wizards/components/Horizontal'
+
 import {
   DrawerMessenger,
   ActivityDrawer,
@@ -30,7 +32,8 @@ const MasterLayout = () => {
           <div className='app-page flex-column flex-column-fluid' id='kt_app_page'>
             <HeaderWrapper />
             <div className='app-wrapper flex-column flex-row-fluid' id='kt_app_wrapper'>
-              <Sidebar />
+              <Horizontal />
+              {/* <Sidebar /> */}
               <div className='app-main flex-column flex-row-fluid' id='kt_app_main'>
                 <div className='d-flex flex-column flex-column-fluid'>
                   <ToolbarWrapper />
@@ -45,16 +48,16 @@ const MasterLayout = () => {
         </div>
 
         {/* begin:: Drawers */}
-        <ActivityDrawer />
-        <RightToolbar />
-        <DrawerMessenger />
+        {/* <ActivityDrawer /> */}
+        {/* <RightToolbar /> */}
+        {/* <DrawerMessenger /> */}
         {/* end:: Drawers */}
 
         {/* begin:: Modals */}
-        <InviteUsers />
-        <UpgradePlan />
+        {/* <InviteUsers /> */}
+        {/* <UpgradePlan /> */}
         {/* end:: Modals */}
-        <ScrollTop />
+        {/* <ScrollTop /> */}
       </ThemeModeProvider>
     </PageDataProvider>
   )

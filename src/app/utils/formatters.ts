@@ -26,13 +26,13 @@ export const dateFormatter = (value: string): string => {
 }
 
 export const currencyUnformatter = (value: string): number => {
-  const strippedValue = value.replace('R$', '').replace(',', '.')
+  const strippedValue = value.replace(/[^\d]/g, '')
 
-  return parseFloat(strippedValue)
+  return parseFloat(strippedValue) / 100
 }
 
 export const percentualUnformatter = (value: string): number => {
-  const strippedValue = value.replace('%', '').replace(',', '.')
+  const strippedValue = value.replace(/[^\d]/g, '')
 
-  return parseFloat(strippedValue)
+  return parseFloat(strippedValue) / 10000
 }

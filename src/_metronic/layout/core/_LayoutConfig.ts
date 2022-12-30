@@ -37,7 +37,7 @@ export const DefaultConfig: ILayout = {
     },
     sidebar: {
       componentName: 'sidebar',
-      display: true,
+      display: false,
       default: {
         class: 'flex-column',
         push: {
