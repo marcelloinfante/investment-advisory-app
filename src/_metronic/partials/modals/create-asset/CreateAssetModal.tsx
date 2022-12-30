@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState, useRef} from 'react'
 import {createPortal} from 'react-dom'
+import {useNavigate} from 'react-router-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
@@ -53,6 +54,8 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
 
   const {createAsset, currentClient} = useInvestiment()
 
+  const navigate = useNavigate()
+
   const closeModal = () => {
     handleClose()
     formik.resetForm()
@@ -75,6 +78,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
 
         createAsset(params)
         closeModal()
+        navigate('/simulacoes')
       } catch (error) {
         console.error(error)
         setStatus('The registration details is incorrect')

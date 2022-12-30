@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState, useRef} from 'react'
 import {createPortal} from 'react-dom'
+import {useNavigate} from 'react-router-dom'
 import {Modal} from 'react-bootstrap'
 import {KTSVG} from '../../../helpers'
 
@@ -20,6 +21,8 @@ const CreateClientModal = ({show, handleClose}: Props) => {
 
   const {createClient} = useInvestiment()
 
+  const navigate = useNavigate()
+
   const updateData = (fieldsToUpdate: Partial<any>) => {
     const updatedData = {...data, ...fieldsToUpdate}
     setData(updatedData)
@@ -28,6 +31,7 @@ const CreateClientModal = ({show, handleClose}: Props) => {
   const submit = () => {
     createClient(data)
     closeModal()
+    navigate('/ativos')
   }
 
   const closeModal = () => {
