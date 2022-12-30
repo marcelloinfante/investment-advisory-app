@@ -11,7 +11,7 @@ type Props = {
   openModal?: () => void
 }
 
-const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
+const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
   const {saveCurrentAsset} = useInvestiment()
 
   const currencyFormatter = (percentual: number) => {
@@ -73,7 +73,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
             {/* begin::Table head */}
             <thead>
               <tr className='fw-bold text-muted bg-light'>
-                <th className='ps-4 min-w-125   px rounded-start'>Código</th>
+                <th className='ps-4 min-w-125 px rounded-start'>Código</th>
                 <th className='min-w-125px'>Emissor</th>
                 <th className='min-w-125px'>Indexador</th>
                 <th className='min-w-125px'>Taxa Entrada</th>
@@ -105,7 +105,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                       <div className='ps-4 d-flex align-items-center'>
                         <div className='d-flex justify-content-start flex-column'>
                           <Link
-                            to='/simulations'
+                            to='/simulacoes'
                             className='text-dark fw-bold text-hover-primary mb-1 fs-6'
                           >
                             {code}
@@ -115,7 +115,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {issuer}
@@ -123,7 +123,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {rate_index}
@@ -131,7 +131,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {percentualFormatter(entrance_rate)}
@@ -139,7 +139,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {quantity}
@@ -147,7 +147,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {currencyFormatter(volume_applied)}
@@ -155,7 +155,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {dateFormatter(application_date)}
@@ -163,7 +163,7 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
                     </td>
                     <td onClick={() => onClick(asset)}>
                       <Link
-                        to='/simulations'
+                        to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                       >
                         {dateFormatter(expiration_date)}
@@ -184,4 +184,4 @@ const TablesWidget11: React.FC<Props> = ({className, assets, openModal}) => {
   )
 }
 
-export {TablesWidget11}
+export {AssetsTable}

@@ -7,7 +7,7 @@ import {AssetHeader} from '../../../_metronic/partials'
 import {useInvestiment} from '../../context/Investiment'
 import {CreateAssetModal} from '../../../_metronic/partials/modals/create-asset/CreateAssetModal'
 
-import {TablesWidget11} from '../../../_metronic/partials/widgets'
+import {AssetsTable} from '../../../_metronic/partials/widgets'
 
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
@@ -29,7 +29,7 @@ const DashboardPage: FC = () => {
   )
 }
 
-const AssetWrapper: FC = () => {
+const SimulationsWrapper: FC = () => {
   const intl = useIntl()
   return (
     <>
@@ -39,4 +39,4 @@ const AssetWrapper: FC = () => {
   )
 }
 
-export {AssetWrapper}
+export {SimulationsWrapper}

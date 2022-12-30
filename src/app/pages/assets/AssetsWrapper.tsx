@@ -7,7 +7,7 @@ import {ClientHeader} from '../../../_metronic/partials'
 import {useInvestiment} from '../../context/Investiment'
 import {CreateAssetModal} from '../../../_metronic/partials/modals/create-asset/CreateAssetModal'
 
-import {TablesWidget11} from '../../../_metronic/partials/widgets'
+import {AssetsTable} from '../../../_metronic/partials/widgets'
 
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
@@ -26,18 +26,14 @@ const DashboardPage: FC = () => {
     <>
       <ClientHeader />
 
-      <TablesWidget11
-        className='mb-5 mb-xl-8'
-        assets={assets}
-        openModal={() => setShowModal(true)}
-      />
+      <AssetsTable className='mb-5 mb-xl-8' assets={assets} openModal={() => setShowModal(true)} />
 
       <CreateAssetModal show={showModal} handleClose={() => setShowModal(false)} />
     </>
   )
 }
 
-const ClientWrapper: FC = () => {
+const AssetsWrapper: FC = () => {
   const intl = useIntl()
   return (
     <>
@@ -47,4 +43,4 @@ const ClientWrapper: FC = () => {
   )
 }
 
-export {ClientWrapper}
+export {AssetsWrapper}

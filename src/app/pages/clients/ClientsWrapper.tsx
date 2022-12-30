@@ -3,7 +3,7 @@ import {FC, useState, useEffect} from 'react'
 import {useIntl} from 'react-intl'
 import {PageTitle} from '../../../_metronic/layout/core'
 import {UserHeader} from '../../../_metronic/partials'
-import {Card2} from '../../../_metronic/partials/content/cards/Card2'
+import {ClientCard} from '../../../_metronic/partials/content/cards/ClientCard'
 
 import {useInvestiment} from '../../context/Investiment'
 import {CreateClientModal} from '../../../_metronic/partials/modals/create-client/CreateClientModal'
@@ -47,7 +47,7 @@ const DashboardPage: FC = () => {
           }): any => {
             return (
               <div className='col-md-6 col-xl-4'>
-                <Card2
+                <ClientCard
                   id={client.id}
                   firstName={client?.first_name}
                   lastName={client?.last_name}
@@ -66,7 +66,7 @@ const DashboardPage: FC = () => {
   )
 }
 
-const UserWrapper: FC = () => {
+const ClientsWrapper: FC = () => {
   const intl = useIntl()
   return (
     <>
@@ -76,4 +76,4 @@ const UserWrapper: FC = () => {
   )
 }
 
-export {UserWrapper}
+export {ClientsWrapper}

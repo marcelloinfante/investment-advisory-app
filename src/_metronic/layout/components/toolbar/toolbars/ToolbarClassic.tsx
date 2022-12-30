@@ -2,7 +2,7 @@
 import clsx from 'clsx'
 import {useState} from 'react'
 import {KTSVG} from '../../../../helpers'
-import {CreateAppModal, Dropdown1} from '../../../../partials'
+// import {CreateAppModal, Dropdown1} from '../../../../partials'
 import {useLayout} from '../../../core'
 
 const ToolbarClassic = () => {

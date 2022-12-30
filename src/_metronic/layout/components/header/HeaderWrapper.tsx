@@ -35,7 +35,7 @@ export function HeaderWrapper() {
                 <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className=' svg-icon-1' />
               </div>
               <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
-                <Link to='/dashboard' className='d-lg-none'>
+                <Link to='/clientes' className='d-lg-none'>
                   <img alt='Logo' src='./assets/media/logos/default-small.svg' className='h-30px' />
                 </Link>
               </div>
@@ -45,7 +45,7 @@ export function HeaderWrapper() {
 
         {!config.app.sidebar?.display && (
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
-            <Link to='/dashboard'>
+            <Link to='/clientes'>
               {config.layoutType !== 'dark-header' ? (
                 <img
                   alt='Logo'

@@ -19,7 +19,14 @@ const formatter = new Intl.NumberFormat('pt-BR', {
   minimumFractionDigits: 2,
 })
 
-const Card2: FC<Props> = ({id, firstName, lastName, email, numberOfAssets, totalInCustody}) => {
+const ClientCard: FC<Props> = ({
+  id,
+  firstName,
+  lastName,
+  email,
+  numberOfAssets,
+  totalInCustody,
+}) => {
   const {saveCurrentClient} = useInvestiment()
 
   const onClick = () => {
@@ -35,7 +42,7 @@ const Card2: FC<Props> = ({id, firstName, lastName, email, numberOfAssets, total
 
   return (
     <Link
-      to='/assets'
+      to='/ativos'
       onClick={onClick}
       className='card border border-2 border-gray-300 border-hover'
     >
@@ -60,4 +67,4 @@ const Card2: FC<Props> = ({id, firstName, lastName, email, numberOfAssets, total
   )
 }
 
-export {Card2}
+export {ClientCard}
