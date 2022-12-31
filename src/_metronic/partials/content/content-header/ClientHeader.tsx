@@ -4,14 +4,10 @@ import {KTSVG} from '../../../helpers'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
 
+import {currencyFormatter} from '../../../../app/utils/formatters'
+
 const ClientHeader: React.FC = () => {
   const {currentClient} = useInvestiment()
-
-  const formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  })
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -52,7 +48,7 @@ const ClientHeader: React.FC = () => {
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
                       <div className='fs-2 fw-bolder'>
-                        {formatter.format(currentClient?.total_in_custody)}
+                        {currencyFormatter(currentClient?.total_in_custody)}
                       </div>
                     </div>
 

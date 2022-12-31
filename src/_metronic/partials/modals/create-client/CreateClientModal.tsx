@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState, useRef} from 'react'
+import {useRef} from 'react'
 import {createPortal} from 'react-dom'
 import {useNavigate} from 'react-router-dom'
 import {Modal} from 'react-bootstrap'
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
+
 import {KTSVG} from '../../../helpers'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
@@ -15,29 +18,45 @@ type Props = {
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
+const initialValues = {
+  first_name: '',
+  last_name: '',
+  email: '',
+}
+
+const registrationSchema = Yup.object().shape({
+  first_name: Yup.string().required('Obrigatório'),
+  last_name: Yup.string().required('Obrigatório'),
+  email: Yup.string().required('Obrigatório').email('Formato do email errado'),
+})
+
 const CreateClientModal = ({show, handleClose}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const [data, setData] = useState<any>({})
 
   const {createClient} = useInvestiment()
 
   const navigate = useNavigate()
 
-  const updateData = (fieldsToUpdate: Partial<any>) => {
-    const updatedData = {...data, ...fieldsToUpdate}
-    setData(updatedData)
-  }
-
-  const submit = () => {
-    createClient(data)
-    closeModal()
-    navigate('/ativos')
-  }
-
   const closeModal = () => {
-    setData({})
     handleClose()
+    formik.resetForm()
   }
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: registrationSchema,
+    onSubmit: async (values, {setStatus, setSubmitting}) => {
+      try {
+        createClient(values)
+        closeModal()
+        navigate('/ativos')
+      } catch (error) {
+        console.error(error)
+        setStatus('The registration details is incorrect')
+        setSubmitting(false)
+      }
+    },
+  })
 
   return createPortal(
     <Modal
@@ -68,13 +87,13 @@ const CreateClientModal = ({show, handleClose}: Props) => {
           {/*begin::Content */}
           <div className='flex-row-fluid py-lg-5 px-lg-15'>
             {/*begin::Form */}
-            <form noValidate id='kt_modal_create_app_form'>
+            <form noValidate id='kt_modal_create_app_form' onSubmit={formik.handleSubmit}>
               <div className='current' data-kt-stepper-element='content'>
                 <div className='w-100'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
-                      <span className='required'>Nome</span>
+                      <span className='required'>Primeiro Nome</span>
                       <i
                         className='fas fa-exclamation-circle ms-2 fs-7'
                         data-bs-toggle='tooltip'
@@ -84,9 +103,15 @@ const CreateClientModal = ({show, handleClose}: Props) => {
                     <input
                       type='text'
                       className='form-control form-control-lg form-control-solid'
-                      value={data.first_name}
-                      onChange={(e) => updateData({first_name: e.target.value})}
+                      {...formik.getFieldProps('first_name')}
                     />
+                    {formik.touched.first_name && formik.errors.first_name && (
+                      <div className='fv-plugins-message-container'>
+                        <div className='fv-help-block'>
+                          <span role='alert'>{formik.errors.first_name}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {/*end::Form Group */}
                 </div>
@@ -107,9 +132,15 @@ const CreateClientModal = ({show, handleClose}: Props) => {
                     <input
                       type='text'
                       className='form-control form-control-lg form-control-solid'
-                      value={data.last_name}
-                      onChange={(e) => updateData({last_name: e.target.value})}
+                      {...formik.getFieldProps('last_name')}
                     />
+                    {formik.touched.last_name && formik.errors.last_name && (
+                      <div className='fv-plugins-message-container'>
+                        <div className='fv-help-block'>
+                          <span role='alert'>{formik.errors.last_name}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {/*end::Form Group */}
                 </div>
@@ -130,9 +161,15 @@ const CreateClientModal = ({show, handleClose}: Props) => {
                     <input
                       type='text'
                       className='form-control form-control-lg form-control-solid'
-                      value={data.email}
-                      onChange={(e) => updateData({email: e.target.value})}
+                      {...formik.getFieldProps('email')}
                     />
+                    {formik.touched.email && formik.errors.email && (
+                      <div className='fv-plugins-message-container'>
+                        <div className='fv-help-block'>
+                          <span role='alert'>{formik.errors.email}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {/*end::Form Group */}
                 </div>
@@ -142,10 +179,11 @@ const CreateClientModal = ({show, handleClose}: Props) => {
               <div className='d-flex flex-stack pt-10'>
                 <div>
                   <button
-                    disabled={!data?.first_name || !data?.last_name || !data?.email}
-                    type='button'
+                    disabled={
+                      formik.isSubmitting || !formik.isValid || !Object.keys(formik.touched).length
+                    }
+                    type='submit'
                     className='btn btn-lg btn-primary'
-                    onClick={submit}
                   >
                     Criar Novo Cliente
                   </button>

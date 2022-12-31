@@ -14,15 +14,18 @@ export const percentualFormatter = (value: number): string => {
     minimumFractionDigits: 2,
   }
 
-  return `% ${new Intl.NumberFormat('pt-BR', options).format(value / 10000).slice(0, -1)}`
+  return new Intl.NumberFormat('pt-BR', options).format(value)
 }
 
-export const dateFormatter = (value: string): string => {
-  return value
-    .replace(/\D+/g, '')
-    .replace(/^(\d{2})(\d)/, '$1/$2')
-    .replace(/^(\d{2}\/\d{2})(\d)/, '$1/$2')
-    .slice(0, 10)
+export const dateFormatter = (dateInt: number) => {
+  const date = new Date(dateInt)
+  const formatter = new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+
+  return formatter.format(date)
 }
 
 export const currencyUnformatter = (value: string): number => {

@@ -20,6 +20,7 @@ const DashboardPage: FC = () => {
   return (
     <>
       <UserHeader />
+
       <div className='d-flex flex-wrap flex-stack mb-6'>
         <h3 className='fw-bolder my-2'>Clientes</h3>
 

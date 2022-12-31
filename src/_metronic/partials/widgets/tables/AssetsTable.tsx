@@ -5,6 +5,12 @@ import {KTSVG} from '../../../helpers'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
 
+import {
+  currencyFormatter,
+  dateFormatter,
+  percentualFormatter,
+} from '../../../../app/utils/formatters'
+
 type Props = {
   className: string
   assets?: []
@@ -13,36 +19,6 @@ type Props = {
 
 const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
   const {saveCurrentAsset} = useInvestiment()
-
-  const currencyFormatter = (percentual: number) => {
-    const formatter = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-      minimumFractionDigits: 2,
-    })
-
-    return formatter.format(percentual)
-  }
-
-  const percentualFormatter = (percentual: number) => {
-    const formatter = new Intl.NumberFormat('pt-BR', {
-      style: 'percent',
-      maximumFractionDigits: 2,
-    })
-
-    return formatter.format(percentual)
-  }
-
-  const dateFormatter = (dateInt: number) => {
-    const date = new Date(dateInt)
-    const formatter = new Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
-
-    return formatter.format(date)
-  }
 
   const onClick = (asset: any) => {
     saveCurrentAsset(asset)

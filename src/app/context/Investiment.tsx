@@ -3,6 +3,7 @@ import {FC, useState, createContext, useContext} from 'react'
 import {WithChildren} from '../../_metronic/helpers'
 import {getClients, getClient, addClient} from '../requests/clients'
 import {getAssets, getAsset, addAsset} from '../requests/assets'
+import {getSimulations, getSimulation, addSimulation} from '../requests/simulations'
 
 import {
   getClientFromLocalStorage,
@@ -34,11 +35,12 @@ const useInvestiment = () => {
 }
 
 const InvestimentProvider: FC<WithChildren> = ({children}) => {
+  const [assets, setAssets] = useState<any>([])
   const [clients, setClients] = useState<any>([])
+  const [simulations, setSimulations] = useState<any>([])
+
   const [currentClient, setCurrentClient] = useState<any>(getClientFromLocalStorage)
   const [currentAsset, setCurrentAsset] = useState<any>(getAssetFromLocalStorage)
-
-  const [assets, setAssets] = useState<any>([])
 
   const queryClients = async () => {
     const returnedClients = await getClients()
@@ -90,17 +92,24 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
     }
   }
 
+  const querySimulations = async () => {
+    const returnedSimulations = await getSimulations(currentClient.id, currentAsset.id)
+    setSimulations(returnedSimulations)
+  }
+
   return (
     <InvestimentContext.Provider
       value={{
         clients,
         assets,
+        simulations,
         currentClient,
         currentAsset,
         queryAssets,
         createAsset,
         queryClients,
         createClient,
+        querySimulations,
         saveCurrentClient,
         saveCurrentAsset,
         queryCurrentAsset,

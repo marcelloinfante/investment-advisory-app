@@ -10,7 +10,6 @@ import * as Yup from 'yup'
 import {KTSVG} from '../../../helpers'
 
 import {
-  dateFormatter,
   currencyFormatter,
   currencyUnformatter,
   percentualFormatter,
@@ -47,6 +46,14 @@ const registrationSchema = Yup.object().shape({
   expiration_date: Yup.string().required('Obrigatório'),
   application_date: Yup.string().required('Obrigatório'),
 })
+
+export const dateFormatter = (value: string): string => {
+  return value
+    .replace(/\D+/g, '')
+    .replace(/^(\d{2})(\d)/, '$1/$2')
+    .replace(/^(\d{2}\/\d{2})(\d)/, '$1/$2')
+    .slice(0, 10)
+}
 
 const CreateAssetModal = ({show, handleClose}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
@@ -106,7 +113,8 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
       return
     }
 
-    const formattedValue = percentualFormatter(parsedValue)
+    let formattedValue = percentualFormatter(parsedValue / 10000)
+    formattedValue = `% ${formattedValue.slice(0, -1)}`
 
     formik.setFieldValue('entrance_rate', formattedValue)
   }

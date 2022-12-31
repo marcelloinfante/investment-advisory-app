@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
 
+import {currencyFormatter} from '../../../../app/utils/formatters'
+
 type Props = {
   id: number
   firstName: string
@@ -12,12 +14,6 @@ type Props = {
   numberOfAssets: number
   totalInCustody: number
 }
-
-const formatter = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-  minimumFractionDigits: 2,
-})
 
 const ClientCard: FC<Props> = ({
   id,
@@ -58,7 +54,7 @@ const ClientCard: FC<Props> = ({
           </div>
 
           <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3'>
-            <div className='fs-6 text-gray-800 fw-bolder'>{formatter.format(totalInCustody)}</div>
+            <div className='fs-6 text-gray-800 fw-bolder'>{currencyFormatter(totalInCustody)}</div>
             <div className='fw-bold text-gray-400'>Custódia</div>
           </div>
         </div>

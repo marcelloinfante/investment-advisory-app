@@ -5,6 +5,8 @@ import {useAuth} from '../../../../app/modules/auth'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
 
+import {currencyFormatter} from '../../../../app/utils/formatters'
+
 const UserHeader: React.FC = () => {
   const {currentUser} = useAuth()
   const {clients} = useInvestiment()
@@ -18,12 +20,6 @@ const UserHeader: React.FC = () => {
     (accumulator: number, item: {total_in_custody: number}) => accumulator + item.total_in_custody,
     0
   )
-
-  const formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  })
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -70,7 +66,7 @@ const UserHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>{formatter.format(valueInCustody)}</div>
+                      <div className='fs-2 fw-bolder'>{currencyFormatter(valueInCustody)}</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>Custódia</div>

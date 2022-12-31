@@ -1,41 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG} from '../../../helpers'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
 
+import {
+  currencyFormatter,
+  percentualFormatter,
+  dateFormatter,
+} from '../../../../app/utils/formatters'
+
 const AssetHeader: React.FC = () => {
   const {currentAsset} = useInvestiment()
-
-  const currencyFormatter = (percentual: number) => {
-    const formatter = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-      minimumFractionDigits: 2,
-    })
-
-    return formatter.format(percentual)
-  }
-
-  const percentualFormatter = (percentual: number) => {
-    const formatter = new Intl.NumberFormat('pt-BR', {
-      style: 'percent',
-      maximumFractionDigits: 2,
-    })
-
-    return formatter.format(percentual)
-  }
-
-  const dateFormatter = (dateInt: number) => {
-    const date = new Date(dateInt)
-    const formatter = new Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
-
-    return formatter.format(date)
-  }
 
   return (
     <div className='card mb-5 mb-xl-10'>
