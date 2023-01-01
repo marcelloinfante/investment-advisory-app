@@ -66,7 +66,7 @@ export function Registration() {
         )
         console.log(token)
         saveAuth(token)
-        const {data} = await getUserByToken(token)
+        const {data} = await getUserByToken()
         setCurrentUser(data)
       } catch (error) {
         console.error(error)

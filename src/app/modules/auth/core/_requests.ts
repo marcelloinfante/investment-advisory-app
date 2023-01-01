@@ -6,6 +6,7 @@ const API_URL = `${process.env.REACT_APP_API_URL}/api/v1/user`
 export const GET_USER_BY_ACCESSTOKEN_URL = API_URL
 export const LOGIN_URL = `${API_URL}/signin`
 export const REGISTER_URL = `${API_URL}/signup`
+export const REFRESH_TOKEN_URL = `${API_URL}/refresh`
 export const REQUEST_PASSWORD_URL = `${API_URL}/forgot_password`
 
 // Server should return AuthModel
@@ -40,9 +41,10 @@ export function requestPassword(email: string) {
   })
 }
 
-export function getUserByToken(token: string | undefined) {
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = token
-  }
+export function refreshToken(): any {
+  return axios.get(REFRESH_TOKEN_URL)
+}
+
+export function getUserByToken() {
   return axios.get<UserModel>(GET_USER_BY_ACCESSTOKEN_URL)
 }

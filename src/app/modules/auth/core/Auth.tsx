@@ -14,7 +14,7 @@ import {setupAxios} from './AuthHelpers'
 import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
 import {AuthModel, UserModel} from './_models'
 import * as authHelper from './AuthHelpers'
-import {getUserByToken} from './_requests'
+import {getUserByToken, refreshToken} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 
 type AuthContextProps = {
@@ -64,7 +64,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 }
 
 const AuthInit: FC<WithChildren> = ({children}) => {
-  const {auth, logout, setCurrentUser} = useAuth()
+  const {auth, saveAuth, logout, setCurrentUser} = useAuth()
   const didRequest = useRef(false)
   const [showSplashScreen, setShowSplashScreen] = useState(true)
   // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
@@ -72,7 +72,7 @@ const AuthInit: FC<WithChildren> = ({children}) => {
     const requestUser = async () => {
       try {
         if (!didRequest.current) {
-          const {data} = await getUserByToken(auth)
+          const {data} = await getUserByToken()
           if (data) {
             setCurrentUser(data)
           }
@@ -96,6 +96,29 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       setShowSplashScreen(false)
     }
     // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    const getNewToken = async () => {
+      try {
+        const {
+          data: {token},
+        } = await refreshToken()
+
+        if (token) {
+          saveAuth(token)
+        } else {
+          logout()
+        }
+      } catch (error) {
+        console.log(error)
+        logout()
+      }
+    }
+
+    setInterval(() => {
+      getNewToken()
+    }, 50 * 60 * 1000)
   }, [])
 
   useEffect(() => {
