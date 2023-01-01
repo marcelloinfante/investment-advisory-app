@@ -2,6 +2,7 @@ import {Suspense} from 'react'
 import {Outlet} from 'react-router-dom'
 
 import {InvestimentProvider} from '../app/context/Investiment'
+import {FirebaseProvider} from '../app/context/Firebase'
 
 import {I18nProvider} from '../_metronic/i18n/i18nProvider'
 import {LayoutProvider, LayoutSplashScreen} from '../_metronic/layout/core'
@@ -11,16 +12,18 @@ import {AuthInit} from './modules/auth'
 const App = () => {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
-      <I18nProvider>
-        <LayoutProvider>
-          <InvestimentProvider>
-            <AuthInit>
-              <Outlet />
-              <MasterInit />
-            </AuthInit>
-          </InvestimentProvider>
-        </LayoutProvider>
-      </I18nProvider>
+      <FirebaseProvider>
+        <I18nProvider>
+          <LayoutProvider>
+            <InvestimentProvider>
+              <AuthInit>
+                <Outlet />
+                <MasterInit />
+              </AuthInit>
+            </InvestimentProvider>
+          </LayoutProvider>
+        </I18nProvider>
+      </FirebaseProvider>
     </Suspense>
   )
 }
