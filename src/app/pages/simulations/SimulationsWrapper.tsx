@@ -12,7 +12,8 @@ import {CreateSimulationModal} from '../../../_metronic/partials/modals/create-s
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
-  const {assets, simulations, querySimulations, queryCurrentAsset} = useInvestiment()
+  const {assets, simulations, querySimulations, queryCurrentAsset, saveCurrentSimulation} =
+    useInvestiment()
 
   useEffect(() => {
     querySimulations()
@@ -55,7 +56,7 @@ const DashboardPage: FC = () => {
           } = simulation
 
           return (
-            <div className='col-md-12 col-xl-6'>
+            <div className='col-md-12 col-xl-6' onClick={() => saveCurrentSimulation(simulation)}>
               <SimulationCard
                 isWorth={is_worth}
                 code={new_asset_code}

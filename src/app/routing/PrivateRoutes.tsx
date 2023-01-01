@@ -3,6 +3,7 @@ import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import {ClientsWrapper} from '../pages/clients/ClientsWrapper'
 import {AssetsWrapper} from '../pages/assets/AssetsWrapper'
 import {SimulationsWrapper} from '../pages/simulations/SimulationsWrapper'
+import {ResultWrapper} from '../pages/result/ResultWrapper'
 
 const PrivateRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const PrivateRoutes = () => {
         <Route path='clientes' element={<ClientsWrapper />} />
         <Route path='ativos' element={<AssetsWrapper />} />
         <Route path='simulacoes' element={<SimulationsWrapper />} />
+        <Route path='resultado' element={<ResultWrapper />} />
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>

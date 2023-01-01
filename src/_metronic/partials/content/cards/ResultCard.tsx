@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC} from 'react'
 import {Link} from 'react-router-dom'
-import {KTSVG, toAbsoluteUrl} from '../../..//helpers'
+import {KTSVG} from '../../../helpers'
 
 import {
   dateFormatter,
@@ -20,7 +20,7 @@ type Props = {
   relativeVariationSamePeriod: number
 }
 
-const SimulationCard: FC<Props> = ({
+const ResultCard: FC<Props> = ({
   code,
   issuer,
   isWorth,
@@ -31,7 +31,7 @@ const SimulationCard: FC<Props> = ({
   relativeVariationSamePeriod,
 }) => {
   return (
-    <Link to='/resultado' className='card border border-2 border-gray-300 border-hover'>
+    <Link to='/resultado' className='card mb-5 mb-xl-10' style={{cursor: 'auto'}}>
       <div className='card-header border-0 pt-9'>
         <div className='card-toolbar'>
           <span className='badge badge-light-warning fw-bolder me-auto px-4 py-3'>
@@ -128,4 +128,4 @@ const SimulationCard: FC<Props> = ({
   )
 }
 
-export {SimulationCard}
+export {ResultCard}

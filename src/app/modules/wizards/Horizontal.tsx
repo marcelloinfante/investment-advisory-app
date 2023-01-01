@@ -45,7 +45,7 @@ const Horizontal: FC = () => {
       assetsLink = '/ativos'
       simulationsLink = '/simulacoes'
       break
-    case '/result':
+    case '/resultado':
       clientsClassName = 'completed cursor-pointer'
       assetsClassName = 'completed cursor-pointer'
       simulationsClassName = 'completed cursor-pointer'
@@ -58,7 +58,7 @@ const Horizontal: FC = () => {
       clientsLink = '/clientes'
       assetsLink = '/ativos'
       simulationsLink = '/simulacoes'
-      resultLink = '/result'
+      resultLink = '/resultado'
       break
   }
 
