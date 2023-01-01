@@ -28,14 +28,61 @@ export const dateFormatter = (dateInt: number) => {
   return formatter.format(date)
 }
 
-export const currencyUnformatter = (value: string): number => {
+export const currencyUnformatter = (value: string): string => {
   const strippedValue = value.replace(/[^\d]/g, '')
 
-  return parseFloat(strippedValue) / 100
+  return (parseFloat(strippedValue) / 100).toString()
 }
 
-export const percentualUnformatter = (value: string): number => {
+export const percentualUnformatter = (value: string): string => {
   const strippedValue = value.replace(/[^\d]/g, '')
 
-  return parseFloat(strippedValue) / 10000
+  return (parseFloat(strippedValue) / 10000).toString()
+}
+
+export const floatUnformatter = (value: string): string => {
+  const strippedValue = value.replace(/[^\d]/g, '')
+
+  return (parseFloat(strippedValue) / 100).toString()
+}
+
+export const transformStringInputInNumber = (value: string): number | void => {
+  if (!value) {
+    return
+  }
+
+  const strippedValue = value.replace(/[^\d]/g, '')
+
+  const parsedValue = parseFloat(strippedValue)
+
+  if (isNaN(parsedValue)) {
+    return
+  }
+
+  return parsedValue
+}
+
+export const formatPercentageInput = (input: string): string => {
+  const parsedInput = transformStringInputInNumber(input)
+
+  let formattedValue = ''
+
+  if (parsedInput) {
+    formattedValue = percentualFormatter(parsedInput / 10000)
+    formattedValue = `% ${formattedValue.slice(0, -1)}`
+  }
+
+  return formattedValue
+}
+
+export const formatCurrencyInput = (input: string): string => {
+  const parsedInput = transformStringInputInNumber(input)
+
+  let formattedValue = ''
+
+  if (parsedInput) {
+    formattedValue = currencyFormatter(parsedInput / 100)
+  }
+
+  return formattedValue
 }

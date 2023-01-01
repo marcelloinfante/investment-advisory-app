@@ -10,10 +10,10 @@ import * as Yup from 'yup'
 import {KTSVG} from '../../../helpers'
 
 import {
-  currencyFormatter,
   currencyUnformatter,
-  percentualFormatter,
   percentualUnformatter,
+  formatPercentageInput,
+  formatCurrencyInput,
 } from '../../../../app/utils/formatters'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
@@ -47,7 +47,7 @@ const registrationSchema = Yup.object().shape({
   application_date: Yup.string().required('Obrigatório'),
 })
 
-export const dateFormatter = (value: string): string => {
+const dateFormatter = (value: string): string => {
   return value
     .replace(/\D+/g, '')
     .replace(/^(\d{2})(\d)/, '$1/$2')
@@ -96,48 +96,21 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
   })
 
   const setEntranceRateValue = (value: string): void => {
-    if (!value) {
-      return
-    }
+    const formattedValue = formatPercentageInput(value)
 
-    const strippedValue = value.replace(/[^\d]/g, '')
-
-    if (!strippedValue) {
+    if (!formattedValue) {
       formik.setFieldValue('entrance_rate', '')
-      return
     }
-
-    const parsedValue = parseFloat(strippedValue)
-
-    if (isNaN(parsedValue)) {
-      return
-    }
-
-    let formattedValue = percentualFormatter(parsedValue / 10000)
-    formattedValue = `% ${formattedValue.slice(0, -1)}`
 
     formik.setFieldValue('entrance_rate', formattedValue)
   }
 
   const setVolumeAppliedValue = (value: string): void => {
-    if (!value) {
-      return
-    }
+    const formattedValue = formatCurrencyInput(value)
 
-    const strippedValue = value.replace(/[^\d]/g, '')
-
-    if (!strippedValue) {
+    if (!formattedValue) {
       formik.setFieldValue('volume_applied', '')
-      return
     }
-
-    const parsedValue = parseFloat(strippedValue)
-
-    if (isNaN(parsedValue)) {
-      return
-    }
-
-    const formattedValue = currencyFormatter(parsedValue / 100)
 
     formik.setFieldValue('volume_applied', formattedValue)
   }

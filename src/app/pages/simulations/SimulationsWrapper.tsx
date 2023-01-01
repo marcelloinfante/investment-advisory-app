@@ -7,6 +7,8 @@ import {AssetHeader} from '../../../_metronic/partials'
 import {useInvestiment} from '../../context/Investiment'
 import {SimulationCard} from '../../../_metronic/partials/content/cards/SimulationCard'
 
+import {CreateSimulationModal} from '../../../_metronic/partials/modals/create-simulation/CreateSimulationModal'
+
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
@@ -68,6 +70,8 @@ const DashboardPage: FC = () => {
           )
         })}
       </div>
+
+      <CreateSimulationModal show={showModal} handleClose={() => setShowModal(false)} />
     </>
   )
 }

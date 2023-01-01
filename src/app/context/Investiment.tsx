@@ -17,15 +17,30 @@ import {
   removeAssetFromLocalStorage,
 } from '../local-storage/asset'
 
+import {
+  getSimulationFromLocalStorage,
+  setSimulationFromLocalStorage,
+  removeSimulationFromLocalStorage,
+} from '../local-storage/simulation'
+
 const initInvestmentContextPropsState = {
-  assets: [],
   clients: [],
+  assets: [],
+  simulations: [],
   currentClient: {},
+  currentAsset: {},
+  currentSimulation: {},
   queryAssets: () => {},
+  createAsset: () => {},
   queryClients: () => {},
   createClient: () => {},
+  querySimulations: () => {},
+  createSimulation: () => {},
   saveCurrentClient: () => {},
+  saveCurrentAsset: () => {},
+  queryCurrentAsset: () => {},
   queryCurrentClient: () => {},
+  saveCurrentSimulation: () => {},
 }
 
 const InvestimentContext = createContext<any>(initInvestmentContextPropsState)
@@ -41,6 +56,7 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
 
   const [currentClient, setCurrentClient] = useState<any>(getClientFromLocalStorage)
   const [currentAsset, setCurrentAsset] = useState<any>(getAssetFromLocalStorage)
+  const [currentSimulation, setCurrentSimulation] = useState<any>(getSimulationFromLocalStorage)
 
   const queryClients = async () => {
     const returnedClients = await getClients()
@@ -55,6 +71,7 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
   const createClient = async (params: any) => {
     const newClient = await addClient(params)
     setClients([...clients, newClient])
+    saveCurrentClient(newClient)
   }
 
   const saveCurrentClient = (client: any) => {
@@ -80,6 +97,7 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
   const createAsset = async (params: any) => {
     const newAsset = await addAsset(params)
     setAssets([...assets, newAsset])
+    saveCurrentAsset(newAsset)
   }
 
   const saveCurrentAsset = (asset: any) => {
@@ -97,6 +115,22 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
     setSimulations(returnedSimulations)
   }
 
+  const createSimulation = async (params: any) => {
+    const newSimulation = await addSimulation(params)
+    setSimulations([...clients, newSimulation])
+    saveCurrentSimulation(newSimulation)
+  }
+
+  const saveCurrentSimulation = (simulation: any) => {
+    if (simulation) {
+      setCurrentSimulation(simulation)
+      setSimulationFromLocalStorage(simulation)
+    } else {
+      setCurrentSimulation(undefined)
+      removeSimulationFromLocalStorage()
+    }
+  }
+
   return (
     <InvestimentContext.Provider
       value={{
@@ -105,15 +139,18 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
         simulations,
         currentClient,
         currentAsset,
+        currentSimulation,
         queryAssets,
         createAsset,
         queryClients,
         createClient,
         querySimulations,
-        saveCurrentClient,
-        saveCurrentAsset,
+        createSimulation,
         queryCurrentAsset,
         queryCurrentClient,
+        saveCurrentAsset,
+        saveCurrentClient,
+        saveCurrentSimulation,
       }}
     >
       {children}
