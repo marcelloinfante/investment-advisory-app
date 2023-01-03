@@ -5,6 +5,8 @@ import {getClients, getClient, addClient} from '../requests/clients'
 import {getAssets, getAsset, addAsset} from '../requests/assets'
 import {getSimulations, getSimulation, addSimulation} from '../requests/simulations'
 
+import {useAuth} from '../modules/auth'
+
 import {
   getClientFromLocalStorage,
   setClientFromLocalStorage,
@@ -50,6 +52,8 @@ const useInvestiment = () => {
 }
 
 const InvestimentProvider: FC<WithChildren> = ({children}) => {
+  const {logout} = useAuth()
+
   const [assets, setAssets] = useState<any>([])
   const [clients, setClients] = useState<any>([])
   const [simulations, setSimulations] = useState<any>([])
@@ -58,13 +62,39 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
   const [currentAsset, setCurrentAsset] = useState<any>(getAssetFromLocalStorage)
   const [currentSimulation, setCurrentSimulation] = useState<any>(getSimulationFromLocalStorage)
 
+  const handleLogout = () => {
+    logout()
+
+    setAssets([])
+    setClients([])
+    setSimulations([])
+
+    setCurrentAsset({})
+    setCurrentClient({})
+    setCurrentSimulation({})
+
+    removeAssetFromLocalStorage()
+    removeClientFromLocalStorage()
+    removeSimulationFromLocalStorage()
+  }
+
   const queryClients = async () => {
     const returnedClients = await getClients()
+
+    if (!!returnedClients?.error) {
+      return handleLogout()
+    }
+
     setClients(returnedClients)
   }
 
   const queryCurrentClient = async () => {
     const returnedClient = await getClient(currentClient.id)
+
+    if (!!returnedClient?.error) {
+      return handleLogout()
+    }
+
     saveCurrentClient(returnedClient)
   }
 
@@ -86,11 +116,21 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
 
   const queryAssets = async () => {
     const returnedAssets = await getAssets(currentClient.id)
+
+    if (!!returnedAssets?.error) {
+      return handleLogout()
+    }
+
     setAssets(returnedAssets)
   }
 
   const queryCurrentAsset = async () => {
     const returnedAsset = await getAsset(currentAsset.id, currentClient.id)
+
+    if (!!returnedAsset?.error) {
+      return handleLogout()
+    }
+
     saveCurrentAsset(returnedAsset)
   }
 
@@ -112,6 +152,11 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
 
   const querySimulations = async () => {
     const returnedSimulations = await getSimulations(currentClient.id, currentAsset.id)
+
+    if (!!returnedSimulations?.error) {
+      return handleLogout()
+    }
+
     setSimulations(returnedSimulations)
   }
 

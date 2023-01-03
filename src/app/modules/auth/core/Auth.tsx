@@ -118,7 +118,7 @@ const AuthInit: FC<WithChildren> = ({children}) => {
 
     setInterval(() => {
       getNewToken()
-    }, 50 * 60 * 1000)
+    }, 5 * 60 * 1000)
   }, [])
 
   useEffect(() => {

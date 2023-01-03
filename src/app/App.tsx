@@ -15,12 +15,12 @@ const App = () => {
       <FirebaseProvider>
         <I18nProvider>
           <LayoutProvider>
-            <InvestimentProvider>
-              <AuthInit>
+            <AuthInit>
+              <InvestimentProvider>
                 <Outlet />
                 <MasterInit />
-              </AuthInit>
-            </InvestimentProvider>
+              </InvestimentProvider>
+            </AuthInit>
           </LayoutProvider>
         </I18nProvider>
       </FirebaseProvider>
