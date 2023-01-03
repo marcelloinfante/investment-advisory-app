@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC, useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useIntl} from 'react-intl'
+
 import {PageTitle} from '../../../_metronic/layout/core'
 import {ClientHeader} from '../../../_metronic/partials'
 
@@ -14,11 +16,17 @@ import {AssetsTable} from '../../../_metronic/partials/widgets'
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
-  const {assets, queryAssets, queryCurrentClient} = useInvestiment()
+  const {assets, queryAssets, currentClient, queryCurrentClient} = useInvestiment()
   const {registerEvent} = useFirebase()
 
+  const navigate = useNavigate()
+
   useEffect(() => {
-    queryAssets()
+    if (!currentClient) {
+      navigate('/clientes')
+    } else {
+      queryAssets()
+    }
   }, [])
 
   useEffect(() => {

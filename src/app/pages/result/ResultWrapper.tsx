@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useIntl} from 'react-intl'
+
 import {PageTitle} from '../../../_metronic/layout/core'
 
 import {useInvestiment} from '../../context/Investiment'
@@ -10,6 +12,18 @@ import {ResultDetailCard} from '../../modules/cards/ResultDetailCard'
 
 const DashboardPage: FC = () => {
   const {currentSimulation} = useInvestiment()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!currentSimulation) {
+      navigate('/clientes')
+    }
+  }, [])
+
+  if (!currentSimulation) {
+    return <></>
+  }
 
   return (
     <>

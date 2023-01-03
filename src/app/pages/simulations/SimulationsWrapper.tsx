@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC, useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useIntl} from 'react-intl'
+
 import {PageTitle} from '../../../_metronic/layout/core'
 import {AssetHeader} from '../../../_metronic/partials'
 
@@ -14,13 +16,26 @@ import {CreateSimulationModal} from '../../../_metronic/partials/modals/create-s
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
-  const {assets, simulations, querySimulations, queryCurrentAsset, saveCurrentSimulation} =
-    useInvestiment()
+  const {
+    assets,
+    simulations,
+    currentClient,
+    currentAsset,
+    querySimulations,
+    queryCurrentAsset,
+    saveCurrentSimulation,
+  } = useInvestiment()
 
   const {registerEvent} = useFirebase()
 
+  const navigate = useNavigate()
+
   useEffect(() => {
-    querySimulations()
+    if (!currentClient || !currentAsset) {
+      navigate('/clientes')
+    } else {
+      querySimulations()
+    }
   }, [])
 
   useEffect(() => {
@@ -39,6 +54,10 @@ const DashboardPage: FC = () => {
     })
 
     saveCurrentSimulation(simulation)
+  }
+
+  if (!currentClient || !currentAsset) {
+    return <></>
   }
 
   return (
