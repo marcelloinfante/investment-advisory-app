@@ -10,6 +10,9 @@ const getSimulation = (simulation_id: string) =>
   axios.get(`${SIMULATIONS_URL}/${simulation_id}`).then((d: AxiosResponse) => d.data)
 
 const addSimulation = (params: any) =>
-  axios.post(SIMULATIONS_URL, params).then((d: AxiosResponse) => d.data)
+  axios
+    .post(SIMULATIONS_URL, params)
+    .then((d: AxiosResponse) => d.data)
+    .catch((error) => error?.response?.data)
 
 export {getSimulations, getSimulation, addSimulation}

@@ -83,7 +83,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                 } = asset
 
                 return (
-                  <tr>
+                  <tr key={index}>
                     <td onClick={() => onClick(asset, index)}>
                       <div className='ps-4 d-flex align-items-center'>
                         <div className='d-flex justify-content-start flex-column'>

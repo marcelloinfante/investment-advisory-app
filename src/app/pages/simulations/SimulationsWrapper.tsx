@@ -74,7 +74,11 @@ const DashboardPage: FC = () => {
           } = simulation
 
           return (
-            <div className='col-md-12 col-xl-6' onClick={() => selectSimulation(simulation, index)}>
+            <div
+              key={index}
+              className='col-md-12 col-xl-6'
+              onClick={() => selectSimulation(simulation, index)}
+            >
               <SimulationCard
                 isWorth={is_worth}
                 code={new_asset_code}

@@ -136,6 +136,11 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
 
   const createAsset = async (params: any) => {
     const newAsset = await addAsset(params)
+
+    if (!!newAsset?.error) {
+      return newAsset
+    }
+
     setAssets([...assets, newAsset])
     saveCurrentAsset(newAsset)
   }
@@ -162,7 +167,12 @@ const InvestimentProvider: FC<WithChildren> = ({children}) => {
 
   const createSimulation = async (params: any) => {
     const newSimulation = await addSimulation(params)
-    setSimulations([...clients, newSimulation])
+
+    if (!!newSimulation?.error) {
+      return newSimulation
+    }
+
+    setSimulations([...simulations, newSimulation])
     saveCurrentSimulation(newSimulation)
   }
 

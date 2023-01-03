@@ -55,7 +55,7 @@ const Step2 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira o código do ativo'
             ></i>
           </label>
           <input
@@ -80,7 +80,7 @@ const Step2 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira o emissor do ativo'
             ></i>
           </label>
           <input
@@ -105,7 +105,7 @@ const Step2 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a data da vencimento do ativo'
             ></i>
           </label>
           <input
@@ -129,7 +129,7 @@ const Step2 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a taxa mínima do ativo'
             ></i>
           </label>
           <input
@@ -154,7 +154,7 @@ const Step2 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a taxa máxima do ativo'
             ></i>
           </label>
           <input
@@ -179,7 +179,7 @@ const Step2 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a duration do ativo'
             ></i>
           </label>
           <input

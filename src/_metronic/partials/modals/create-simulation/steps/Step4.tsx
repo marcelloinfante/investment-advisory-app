@@ -21,7 +21,7 @@ const Step4 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira o valor de resgate de mercado'
             ></i>
           </label>
           <input
@@ -37,7 +37,7 @@ const Step4 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira o volume da curva'
             ></i>
           </label>
           <input

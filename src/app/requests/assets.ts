@@ -9,6 +9,10 @@ const getAssets = (client_id: number) =>
 const getAsset = (asset_id: string, client_id: string) =>
   axios.get(`${ASSETS_URL}/${asset_id}`, {params: {client_id}}).then((d: AxiosResponse) => d.data)
 
-const addAsset = (params: any) => axios.post(ASSETS_URL, params).then((d: AxiosResponse) => d.data)
+const addAsset = (params: any) =>
+  axios
+    .post(ASSETS_URL, params)
+    .then((d: AxiosResponse) => d.data)
+    .catch((error) => error?.response?.data)
 
 export {getAssets, getAsset, addAsset}

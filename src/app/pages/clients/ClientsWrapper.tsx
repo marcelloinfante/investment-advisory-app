@@ -59,9 +59,8 @@ const DashboardPage: FC = () => {
             index: number
           ): any => {
             return (
-              <div className='col-md-6 col-xl-4'>
+              <div key={index} className='col-md-6 col-xl-4'>
                 <ClientCard
-                  key={index}
                   index={index}
                   id={client.id}
                   firstName={client?.first_name}

@@ -12,7 +12,6 @@ import {Step1} from './steps/Step1'
 import {Step2} from './steps/Step2'
 import {Step3} from './steps/Step3'
 import {Step4} from './steps/Step4'
-import {Step5} from './steps/Step5'
 
 import {
   floatUnformatter,
@@ -91,10 +90,19 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
           new_asset_indicative_rate: percentualUnformatter(values.new_asset_indicative_rate),
         }
 
-        createSimulation(params)
-        closeModal()
+        const result = await createSimulation(params)
 
-        registerEvent('simulation_create')
+        if (!!result?.error) {
+          setStatus('Ocorreu um erro')
+          setSubmitting(false)
+          console.error(result?.error)
+
+          registerEvent('simulation_create_error')
+        } else {
+          closeModal()
+
+          registerEvent('simulation_create')
+        }
       } catch (error) {
         console.error(error)
         setStatus('The registration details is incorrect')
@@ -204,7 +212,7 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
       <div className='modal-header'>
         <h2>Criar Nova Simulação</h2>
         {/* begin::Close */}
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
+        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={closeModal}>
           <KTSVG className='svg-icon-1' path='/media/icons/duotune/arrows/arr061.svg' />
         </div>
         {/* end::Close */}
@@ -322,35 +330,8 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
                   {/* end::Label*/}
                 </div>
                 {/* end::Wrapper*/}
-
-                {/* begin::Line*/}
-                <div className='stepper-line h-40px'></div>
-                {/* end::Line*/}
               </div>
               {/* end::Step 4*/}
-
-              {/* begin::Step 5*/}
-              <div className='stepper-item' data-kt-stepper-element='nav'>
-                {/* begin::Wrapper*/}
-                <div className='stepper-wrapper'>
-                  {/* begin::Icon*/}
-                  <div className='stepper-icon w-40px h-40px'>
-                    <i className='stepper-check fas fa-check'></i>
-                    <span className='stepper-number'>5</span>
-                  </div>
-                  {/* end::Icon*/}
-
-                  {/* begin::Label*/}
-                  <div className='stepper-label'>
-                    <h3 className='stepper-title'>Simulação Criada</h3>
-
-                    <div className='stepper-desc'>Confirme a criação da simulação</div>
-                  </div>
-                  {/* end::Label*/}
-                </div>
-                {/* end::Wrapper*/}
-              </div>
-              {/* end::Step 5*/}
             </div>
             {/* end::Nav*/}
           </div>
@@ -360,11 +341,16 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
           <div className='flex-row-fluid py-lg-5 px-lg-15'>
             {/*begin::Form */}
             <form noValidate id='kt_modal_create_app_form' onSubmit={formik.handleSubmit}>
+              {formik.status && (
+                <div className='alert alert-danger mb-10'>
+                  <div className='alert-text font-weight-bold'>{formik.status}</div>
+                </div>
+              )}
+
               <Step1 formik={formik} />
               <Step2 formik={formik} />
               <Step3 formik={formik} />
               <Step4 formik={formik} />
-              <Step5 />
 
               {/*begin::Actions */}
               <div className='d-flex flex-stack pt-10'>
@@ -379,7 +365,7 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
                       path='/media/icons/duotune/arrows/arr063.svg'
                       className='svg-icon-3 me-1'
                     />{' '}
-                    Previous
+                    Voltar
                   </button>
                 </div>
                 <div>
@@ -388,7 +374,7 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
                     className='btn btn-lg btn-primary'
                     data-kt-stepper-action='submit'
                   >
-                    Submit{' '}
+                    Concluir{' '}
                     <KTSVG
                       path='/media/icons/duotune/arrows/arr064.svg'
                       className='svg-icon-3 ms-2 me-0'
@@ -401,7 +387,7 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
                     data-kt-stepper-action='next'
                     onClick={nextStep}
                   >
-                    Next Step{' '}
+                    Continuar{' '}
                     <KTSVG
                       path='/media/icons/duotune/arrows/arr064.svg'
                       className='svg-icon-3 ms-1 me-0'

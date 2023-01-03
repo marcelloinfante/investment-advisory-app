@@ -73,14 +73,7 @@ export function ResultDetailCard() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>
-              Vencimento do novo ativo
-              <i
-                className='fas fa-exclamation-circle ms-1 fs-7'
-                data-bs-toggle='tooltip'
-                title='Phone number must be active'
-              ></i>
-            </label>
+            <label className='col-lg-4 fw-bold text-muted'>Vencimento do novo ativo</label>
 
             <div className='col-lg-8 d-flex align-items-center'>
               <span className='fw-bolder fs-6 me-2'>
@@ -100,14 +93,7 @@ export function ResultDetailCard() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>
-              Taxa máxima
-              <i
-                className='fas fa-exclamation-circle ms-1 fs-7'
-                data-bs-toggle='tooltip'
-                title='Country of origination'
-              ></i>
-            </label>
+            <label className='col-lg-4 fw-bold text-muted'>Taxa máxima</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>

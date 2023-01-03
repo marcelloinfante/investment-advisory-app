@@ -81,13 +81,20 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
           volume_applied: currencyUnformatter(values.volume_applied),
         }
 
-        createAsset(params)
-        closeModal()
+        const result = await createAsset(params)
 
-        registerEvent('asset_create')
+        if (!!result?.error) {
+          setStatus('Ocorreu um erro')
+          setSubmitting(false)
+          console.error(result?.error)
+        } else {
+          closeModal()
+
+          registerEvent('asset_create')
+        }
       } catch (error) {
         console.error(error)
-        setStatus('The registration details is incorrect')
+        setStatus(error)
         setSubmitting(false)
 
         registerEvent('asset_create_error')
@@ -143,6 +150,11 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
       </div>
 
       <div className='modal-body py-lg-10 px-lg-10'>
+        {formik.status && (
+          <div className='alert alert-danger mb-10'>
+            <div className='alert-text font-weight-bold'>{formik.status}</div>
+          </div>
+        )}
         {/*begin::Stepper */}
         <div
           ref={stepperRef}
@@ -153,7 +165,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
           <div className='flex-row-fluid py-lg-5 px-lg-15'>
             {/*begin::Form */}
             <form noValidate id='kt_modal_create_app_form' onSubmit={formik.handleSubmit}>
-              <div className='current d-sm-block d-md-flex' data-kt-stepper-element='content'>
+              <div className='current d-block d-md-flex' data-kt-stepper-element='content'>
                 <div className='w-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
@@ -212,7 +224,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                 </div>
               </div>
 
-              <div className='current d-sm-block d-md-flex' data-kt-stepper-element='content'>
+              <div className='current d-block d-md-flex' data-kt-stepper-element='content'>
                 <div className='w-md-50'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
@@ -305,7 +317,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                 </div>
               </div>
 
-              <div className='current d-sm-block d-md-flex' data-kt-stepper-element='content'>
+              <div className='current d-block d-md-flex' data-kt-stepper-element='content'>
                 <div className='w-md-50'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>

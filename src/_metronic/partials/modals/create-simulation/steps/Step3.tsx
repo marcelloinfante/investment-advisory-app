@@ -21,7 +21,7 @@ const Step3 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a taxa de mercado'
             ></i>
           </label>
           <input
@@ -37,7 +37,7 @@ const Step3 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a taxa indicativa'
             ></i>
           </label>
           <input
@@ -53,7 +53,7 @@ const Step3 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira a nova taxa sugerida'
             ></i>
           </label>
           <input
@@ -69,7 +69,7 @@ const Step3 = ({formik}: any) => {
             <i
               className='fas fa-exclamation-circle ms-2 fs-7'
               data-bs-toggle='tooltip'
-              title='Insira a data da cotação'
+              title='Insira o cdi médio'
             ></i>
           </label>
           <input
