@@ -219,7 +219,7 @@ export function Login() {
 
       <div className='text-gray-500 text-center fw-semibold fs-6'>
         Não se registrou?{' '}
-        <Link to='/auth/registration' className='link-primary'>
+        <Link to='/auth/registrar' className='link-primary'>
           Registrar
         </Link>
       </div>
