@@ -153,7 +153,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
           <div className='flex-row-fluid py-lg-5 px-lg-15'>
             {/*begin::Form */}
             <form noValidate id='kt_modal_create_app_form' onSubmit={formik.handleSubmit}>
-              <div className='current' data-kt-stepper-element='content'>
+              <div className='current d-sm-block d-md-flex' data-kt-stepper-element='content'>
                 <div className='w-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
@@ -182,7 +182,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                   </div>
                   {/*end::Form Group */}
                 </div>
-                <div className='w-100 ms-10'>
+                <div className='w-100 ms-md-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
@@ -212,8 +212,8 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                 </div>
               </div>
 
-              <div className='current' data-kt-stepper-element='content'>
-                <div className='w-50'>
+              <div className='current d-sm-block d-md-flex' data-kt-stepper-element='content'>
+                <div className='w-md-50'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
@@ -244,7 +244,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                   {/*end::Form Group */}
                 </div>
 
-                <div className='w-50 ms-10'>
+                <div className='w-md-50 ms-md-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
@@ -273,7 +273,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                   {/*end::Form Group */}
                 </div>
 
-                <div className='w-50 ms-10'>
+                <div className='w-md-50 ms-md-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
@@ -305,8 +305,8 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                 </div>
               </div>
 
-              <div className='current' data-kt-stepper-element='content'>
-                <div className='w-50'>
+              <div className='current d-sm-block d-md-flex' data-kt-stepper-element='content'>
+                <div className='w-md-50'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
@@ -335,7 +335,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                   {/*end::Form Group */}
                 </div>
 
-                <div className='w-50 ms-10'>
+                <div className='w-md-50 ms-md-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
@@ -364,7 +364,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
                   {/*end::Form Group */}
                 </div>
 
-                <div className='w-50 ms-10'>
+                <div className='w-md-50 ms-md-10'>
                   {/*begin::Form Group */}
                   <div className='fv-row mb-10'>
                     <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>

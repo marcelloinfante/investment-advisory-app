@@ -6,9 +6,10 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import {getUserByToken, register} from '../core/_requests'
 import {Link} from 'react-router-dom'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
 import {useAuth} from '../core/Auth'
+
+import {useFirebase} from '../../../context/Firebase'
 
 const initialValues = {
   firstname: '',
@@ -21,34 +22,40 @@ const initialValues = {
 
 const registrationSchema = Yup.object().shape({
   firstname: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('First name is required'),
+    .min(3, 'Não pode ter meons de 3 caracteres')
+    .max(50, 'Não pode ter mais de 50 caracteres')
+    .required('Primeiro Nome não pode estar vazio'),
   email: Yup.string()
     .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
+    .min(3, 'Não pode ter meons de 3 caracteres')
+    .max(50, 'Não pode ter mais de 50 caracteres')
+    .required('Email não pode estar vazio'),
   lastname: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Last name is required'),
+    .min(3, 'Não pode ter meons de 3 caracteres')
+    .max(50, 'Não pode ter mais de 50 caracteres')
+    .required('Sobrenome não pode estar vazio'),
   password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
+    .min(3, 'Não pode ter meons de 3 caracteres')
+    .max(50, 'Não pode ter mais de 50 caracteres')
+    .required('Senha não pode estar vazio'),
   changepassword: Yup.string()
-    .required('Password confirmation is required')
+    .required('Confirmação de Senha não pode estar vazio')
     .when('password', {
       is: (val: string) => (val && val.length > 0 ? true : false),
-      then: Yup.string().oneOf([Yup.ref('password')], "Password and Confirm Password didn't match"),
+      then: Yup.string().oneOf(
+        [Yup.ref('password')],
+        'Senha e Confirmação de Senha não são iguais'
+      ),
     }),
-  acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
+  acceptTerms: Yup.bool().required('Você precisa aceitar os termos e condições'),
 })
 
 export function Registration() {
   const [loading, setLoading] = useState(false)
   const {saveAuth, setCurrentUser} = useAuth()
+
+  const {registerEvent} = useFirebase()
+
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
@@ -64,10 +71,11 @@ export function Registration() {
           values.password,
           values.changepassword
         )
-        console.log(token)
         saveAuth(token)
         const {data} = await getUserByToken()
         setCurrentUser(data)
+
+        registerEvent('register')
       } catch (error) {
         console.error(error)
         saveAuth(undefined)
@@ -92,7 +100,7 @@ export function Registration() {
       {/* begin::Heading */}
       <div className='text-center mb-11'>
         {/* begin::Title */}
-        <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
+        <h1 className='text-dark fw-bolder mb-3'>Registrar</h1>
         {/* end::Title */}
 
         {/* <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div> */}
@@ -156,9 +164,9 @@ export function Registration() {
 
       {/* begin::Form group Firstname */}
       <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-dark fs-6'>First name</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Primeiro Nome</label>
         <input
-          placeholder='First name'
+          placeholder='Primeiro Nome'
           type='text'
           autoComplete='off'
           {...formik.getFieldProps('firstname')}
@@ -183,9 +191,9 @@ export function Registration() {
       {/* end::Form group */}
       <div className='fv-row mb-8'>
         {/* begin::Form group Lastname */}
-        <label className='form-label fw-bolder text-dark fs-6'>Last name</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Sobrenome</label>
         <input
-          placeholder='Last name'
+          placeholder='Sobrenome'
           type='text'
           autoComplete='off'
           {...formik.getFieldProps('lastname')}
@@ -238,11 +246,11 @@ export function Registration() {
       {/* begin::Form group Password */}
       <div className='fv-row mb-8' data-kt-password-meter='true'>
         <div className='mb-1'>
-          <label className='form-label fw-bolder text-dark fs-6'>Password</label>
+          <label className='form-label fw-bolder text-dark fs-6'>Senha</label>
           <div className='position-relative mb-3'>
             <input
               type='password'
-              placeholder='Password'
+              placeholder='Senha'
               autoComplete='off'
               {...formik.getFieldProps('password')}
               className={clsx(
@@ -276,17 +284,17 @@ export function Registration() {
           {/* end::Meter */}
         </div>
         <div className='text-muted'>
-          Use 8 or more characters with a mix of letters, numbers & symbols.
+          Use 8 ou mais caracteres com uma mistura de letras, números & simbolos.
         </div>
       </div>
       {/* end::Form group */}
 
       {/* begin::Form group Confirm password */}
       <div className='fv-row mb-5'>
-        <label className='form-label fw-bolder text-dark fs-6'>Confirm Password</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Confirmação de Senha</label>
         <input
           type='password'
-          placeholder='Password confirmation'
+          placeholder='Confirmação de Senha'
           autoComplete='off'
           {...formik.getFieldProps('changepassword')}
           className={clsx(
@@ -319,13 +327,13 @@ export function Registration() {
             {...formik.getFieldProps('acceptTerms')}
           />
           <span>
-            I Accept the{' '}
+            Eu aceito os
             <a
               href='https://keenthemes.com/metronic/?page=faq'
               target='_blank'
               className='ms-1 link-primary'
             >
-              Terms
+              Termos
             </a>
             .
           </span>
@@ -348,10 +356,10 @@ export function Registration() {
           className='btn btn-lg btn-primary w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid || !formik.values.acceptTerms}
         >
-          {!loading && <span className='indicator-label'>Submit</span>}
+          {!loading && <span className='indicator-label'>Registrar</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
-              Please wait...{' '}
+              Carregando...{' '}
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}
@@ -362,7 +370,7 @@ export function Registration() {
             id='kt_login_signup_form_cancel_button'
             className='btn btn-lg btn-light-primary w-100 mb-5'
           >
-            Cancel
+            Cancelar
           </button>
         </Link>
       </div>

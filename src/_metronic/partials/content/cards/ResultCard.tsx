@@ -59,46 +59,12 @@ const ResultCard: FC<Props> = ({
 
         <div className='d-flex flex-wrap'>
           <div className='text-gray-800 fs-2tx fw-bolder mb-3'>
-            {currencyFormatter(finalVariation)}
-          </div>
-        </div>
-
-        <div className='d-flex flex-wrap mb-5'>
-          <div className='d-flex align-items-center flex-wrap mb-5 mt-auto fs-6'>
-            {relativeFinalVariation > 0 && (
-              <KTSVG
-                path='/media/icons/duotune/arrows/arr007.svg'
-                className='svg-icon-3 me-1 svg-icon-success'
-              />
-            )}
-
-            {relativeFinalVariation < 0 && (
-              <KTSVG
-                path='/media/icons/duotune/arrows/arr006.svg'
-                className='svg-icon-3 me-1 svg-icon-danger'
-              />
-            )}
-            <div
-              className={
-                'fw-bolder me-2 ' + (relativeFinalVariation > 0 ? 'text-success' : 'text-danger')
-              }
-            >
-              {percentualFormatter(relativeFinalVariation)}
-            </div>
-            <div className='fw-bold text-gray-400'>Diferença Relativa</div>
-          </div>
-        </div>
-
-        <div className='fs-3 fw-bolder text-dark mb-3'>Diferença (período diferente)</div>
-
-        <div className='d-flex flex-wrap'>
-          <div className='text-gray-800 fs-2tx fw-bolder mb-3'>
             {currencyFormatter(variationSamePeriod)}
           </div>
         </div>
 
         <div className='d-flex flex-wrap mb-5'>
-          <div className='d-flex align-items-center flex-wrap mt-auto fs-6'>
+          <div className='d-flex align-items-center flex-wrap mb-5 mt-auto fs-6'>
             {relativeVariationSamePeriod > 0 && (
               <KTSVG
                 path='/media/icons/duotune/arrows/arr007.svg'
@@ -119,6 +85,40 @@ const ResultCard: FC<Props> = ({
               }
             >
               {percentualFormatter(relativeVariationSamePeriod)}
+            </div>
+            <div className='fw-bold text-gray-400'>Diferença Relativa</div>
+          </div>
+        </div>
+
+        <div className='fs-3 fw-bolder text-dark mb-3'>Diferença (período diferente)</div>
+
+        <div className='d-flex flex-wrap'>
+          <div className='text-gray-800 fs-2tx fw-bolder mb-3'>
+            {currencyFormatter(finalVariation)}
+          </div>
+        </div>
+
+        <div className='d-flex flex-wrap mb-5'>
+          <div className='d-flex align-items-center flex-wrap mt-auto fs-6'>
+            {relativeFinalVariation > 0 && (
+              <KTSVG
+                path='/media/icons/duotune/arrows/arr007.svg'
+                className='svg-icon-3 me-1 svg-icon-success'
+              />
+            )}
+
+            {relativeFinalVariation < 0 && (
+              <KTSVG
+                path='/media/icons/duotune/arrows/arr006.svg'
+                className='svg-icon-3 me-1 svg-icon-danger'
+              />
+            )}
+            <div
+              className={
+                'fw-bolder me-2 ' + (relativeFinalVariation > 0 ? 'text-success' : 'text-danger')
+              }
+            >
+              {percentualFormatter(relativeFinalVariation)}
             </div>
             <div className='fw-bold text-gray-400'>Diferença Relativa</div>
           </div>

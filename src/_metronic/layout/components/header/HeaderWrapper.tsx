@@ -13,11 +13,11 @@ export function HeaderWrapper() {
   }
 
   return (
-    <div id='kt_app_header' className='app-header'>
+    <div id='kt_app_header' className='app-header' style={{alignItems: 'stretch !important'}}>
       <div
         id='kt_app_header_container'
         className={clsx(
-          'app-container flex-lg-grow-1',
+          'app-container flex-lg-grow-1 w-100',
           classes.headerContainer.join(' '),
           config.app?.header?.default?.containerClass
         )}

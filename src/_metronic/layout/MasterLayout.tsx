@@ -34,12 +34,12 @@ const MasterLayout = () => {
                     <Outlet />
                   </Content>
                 </div>
-                <FooterWrapper />
+                {/* <FooterWrapper /> */}
               </div>
             </div>
           </div>
         </div>
-        {/* <ScrollTop /> */}
+        <ScrollTop />
       </ThemeModeProvider>
     </PageDataProvider>
   )

@@ -5,19 +5,20 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {getUserByToken, login} from '../core/_requests'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {useAuth} from '../core/Auth'
+
+import {useFirebase} from '../../../context/Firebase'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
+    .email('Email no formato errado')
+    .min(3, 'Não pode ter meons de 3 caracteres')
+    .max(50, 'Não pode ter mais de 50 caracteres')
+    .required('Email não pode estar vazio'),
   password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
+    .min(3, 'Não pode ter meons de 3 caracteres')
+    .max(50, 'Não pode ter mais de 50 caracteres')
+    .required('Senha não pode estar vazio'),
 })
 
 const initialValues = {
@@ -35,6 +36,8 @@ export function Login() {
   const [loading, setLoading] = useState(false)
   const {saveAuth, setCurrentUser} = useAuth()
 
+  const {registerEvent} = useFirebase()
+
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
@@ -47,10 +50,12 @@ export function Login() {
         saveAuth(token)
         const {data} = await getUserByToken()
         setCurrentUser(data)
+
+        registerEvent('login')
       } catch (error) {
         console.error(error)
         saveAuth(undefined)
-        setStatus('The login details are incorrect')
+        setStatus('O email/senha está errado ')
         setSubmitting(false)
         setLoading(false)
       }
@@ -66,7 +71,7 @@ export function Login() {
     >
       {/* begin::Heading */}
       <div className='text-center mb-11'>
-        <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
+        <h1 className='text-dark fw-bolder mb-3'>Login</h1>
         {/* <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div> */}
       </div>
       {/* begin::Heading */}
@@ -122,16 +127,9 @@ export function Login() {
       </div> */}
       {/* end::Separator */}
 
-      {formik.status ? (
+      {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
-        </div>
-      ) : (
-        <div className='mb-10 bg-light-info p-8 rounded'>
-          <div className='text-info'>
-            Use account <strong>admin@demo.com</strong> and password <strong>demo</strong> to
-            continue.
-          </div>
         </div>
       )}
 
@@ -162,7 +160,7 @@ export function Login() {
 
       {/* begin::Form group */}
       <div className='fv-row mb-3'>
-        <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
+        <label className='form-label fw-bolder text-dark fs-6'>Senha</label>
         <input
           placeholder='******'
           type='password'
@@ -193,9 +191,9 @@ export function Login() {
         <div />
 
         {/* begin::Link */}
-        <Link to='/auth/forgot-password' className='link-primary'>
-          Forgot Password ?
-        </Link>
+        {/* <Link to='/auth/forgot-password' className='link-primary'>
+          Esqueceu a senha ?
+        </Link> */}
         {/* end::Link */}
       </div>
       {/* end::Wrapper */}
@@ -208,10 +206,10 @@ export function Login() {
           className='btn btn-primary'
           disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className='indicator-label'>Continue</span>}
+          {!loading && <span className='indicator-label'>Continuar</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
-              Please wait...
+              Carregando...
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}
@@ -220,9 +218,9 @@ export function Login() {
       {/* end::Action */}
 
       <div className='text-gray-500 text-center fw-semibold fs-6'>
-        Not a Member yet?{' '}
+        Não se registrou?{' '}
         <Link to='/auth/registration' className='link-primary'>
-          Sign up
+          Registrar
         </Link>
       </div>
     </form>

@@ -6,9 +6,7 @@ import {useInvestiment} from '../../context/Investiment'
 import {dateFormatter, currencyFormatter, percentualFormatter} from '../../utils/formatters'
 
 export function ResultDetailCard() {
-  const {currentSimulation} = useInvestiment()
-
-  console.log(currentSimulation)
+  const {currentAsset, currentSimulation} = useInvestiment()
 
   const {
     agio,
@@ -319,7 +317,19 @@ export function ResultDetailCard() {
                   {is_worth ? 'Vale a pena trocar!' : 'Não vale a pena trocar'}
                 </h4>
                 <div className='fs-6 text-gray-600'>
-                  Your payment was declined. To start using tools, please.
+                  {is_worth
+                    ? `Vale a pena trocar o ativo ${
+                        currentAsset?.code
+                      } pelo ativo ${new_asset_code}, já que ela vai aumentar o ganho do
+                  cliente em ${percentualFormatter(
+                    relative_variation_same_period
+                  )} e em ${currencyFormatter(variation_same_period)}`
+                    : `Não vale a pena trocar o ativo ${
+                        currentAsset?.code
+                      } pelo ativo ${new_asset_code}, já que ela vai diminuir o ganho do
+                  cliente em ${percentualFormatter(
+                    relative_variation_same_period
+                  )} e em ${currencyFormatter(variation_same_period)}`}
                 </div>
               </div>
             </div>

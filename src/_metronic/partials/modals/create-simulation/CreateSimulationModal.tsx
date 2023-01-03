@@ -218,7 +218,7 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
           id='kt_modal_create_app_stepper'
         >
           {/* begin::Aside*/}
-          <div className='d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px'>
+          <div className='d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px mb-10'>
             {/* begin::Nav*/}
             <div className='stepper-nav ps-lg-10'>
               {/* begin::Step 1*/}
