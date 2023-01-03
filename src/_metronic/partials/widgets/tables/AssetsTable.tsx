@@ -5,6 +5,8 @@ import {KTSVG} from '../../../helpers'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
 
+import {useFirebase} from '../../../../app/context/Firebase'
+
 import {
   currencyFormatter,
   dateFormatter,
@@ -19,8 +21,13 @@ type Props = {
 
 const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
   const {saveCurrentAsset} = useInvestiment()
+  const {registerEvent} = useFirebase()
 
-  const onClick = (asset: any) => {
+  const onClick = (asset: any, index: number) => {
+    registerEvent('asset_select', {
+      position_index: index,
+    })
+
     saveCurrentAsset(asset)
   }
 
@@ -63,7 +70,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-              {assets?.map((asset) => {
+              {assets?.map((asset, index) => {
                 const {
                   code,
                   issuer,
@@ -77,7 +84,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
 
                 return (
                   <tr>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <div className='ps-4 d-flex align-items-center'>
                         <div className='d-flex justify-content-start flex-column'>
                           <Link
@@ -89,7 +96,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         </div>
                       </div>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
@@ -97,7 +104,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         {issuer}
                       </Link>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
@@ -105,7 +112,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         {rate_index}
                       </Link>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
@@ -113,7 +120,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         {percentualFormatter(entrance_rate)}
                       </Link>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
@@ -121,7 +128,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         {quantity}
                       </Link>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
@@ -129,7 +136,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         {currencyFormatter(volume_applied)}
                       </Link>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
@@ -137,7 +144,7 @@ const AssetsTable: React.FC<Props> = ({className, assets, openModal}) => {
                         {dateFormatter(application_date)}
                       </Link>
                     </td>
-                    <td onClick={() => onClick(asset)}>
+                    <td onClick={() => onClick(asset, index)}>
                       <Link
                         to='/simulacoes'
                         className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'

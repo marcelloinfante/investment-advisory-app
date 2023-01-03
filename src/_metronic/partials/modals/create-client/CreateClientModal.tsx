@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useRef} from 'react'
 import {createPortal} from 'react-dom'
-import {useNavigate} from 'react-router-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
@@ -10,6 +9,7 @@ import * as Yup from 'yup'
 import {KTSVG} from '../../../helpers'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
+import {useFirebase} from '../../../../app/context/Firebase'
 
 type Props = {
   show: boolean
@@ -34,8 +34,7 @@ const CreateClientModal = ({show, handleClose}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
   const {createClient} = useInvestiment()
-
-  const navigate = useNavigate()
+  const {registerEvent} = useFirebase()
 
   const closeModal = () => {
     handleClose()
@@ -46,14 +45,19 @@ const CreateClientModal = ({show, handleClose}: Props) => {
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
+      registerEvent('client_form_submit')
+
       try {
         createClient(values)
         closeModal()
-        navigate('/ativos')
+
+        registerEvent('client_create')
       } catch (error) {
         console.error(error)
         setStatus('The registration details is incorrect')
         setSubmitting(false)
+
+        registerEvent('client_create_error')
       }
     },
   })

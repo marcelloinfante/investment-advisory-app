@@ -5,6 +5,8 @@ import {PageTitle} from '../../../_metronic/layout/core'
 import {AssetHeader} from '../../../_metronic/partials'
 
 import {useInvestiment} from '../../context/Investiment'
+import {useFirebase} from '../../context/Firebase'
+
 import {SimulationCard} from '../../../_metronic/partials/content/cards/SimulationCard'
 
 import {CreateSimulationModal} from '../../../_metronic/partials/modals/create-simulation/CreateSimulationModal'
@@ -15,6 +17,8 @@ const DashboardPage: FC = () => {
   const {assets, simulations, querySimulations, queryCurrentAsset, saveCurrentSimulation} =
     useInvestiment()
 
+  const {registerEvent} = useFirebase()
+
   useEffect(() => {
     querySimulations()
   }, [])
@@ -22,6 +26,20 @@ const DashboardPage: FC = () => {
   useEffect(() => {
     queryCurrentAsset()
   }, [assets])
+
+  const handleModal = () => {
+    registerEvent('open_simulation_creation_modal')
+
+    setShowModal(true)
+  }
+
+  const selectSimulation = (simulation: {}, index: number) => {
+    registerEvent('simulation_select', {
+      position_index: index,
+    })
+
+    saveCurrentSimulation(simulation)
+  }
 
   return (
     <>
@@ -32,7 +50,7 @@ const DashboardPage: FC = () => {
 
         <div className='d-flex flex-wrap my-2'>
           <a
-            onClick={() => setShowModal(true)}
+            onClick={handleModal}
             className='btn btn-primary btn-sm'
             data-bs-toggle='modal'
             data-bs-target='#kt_modal_create_client'
@@ -43,7 +61,7 @@ const DashboardPage: FC = () => {
       </div>
 
       <div className='row g-6 g-xl-9'>
-        {simulations.map((simulation: any) => {
+        {simulations.map((simulation: any, index: number) => {
           const {
             is_worth,
             quotation_date,
@@ -56,7 +74,7 @@ const DashboardPage: FC = () => {
           } = simulation
 
           return (
-            <div className='col-md-12 col-xl-6' onClick={() => saveCurrentSimulation(simulation)}>
+            <div className='col-md-12 col-xl-6' onClick={() => selectSimulation(simulation, index)}>
               <SimulationCard
                 isWorth={is_worth}
                 code={new_asset_code}

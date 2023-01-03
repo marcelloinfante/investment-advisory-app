@@ -5,6 +5,8 @@ import {PageTitle} from '../../../_metronic/layout/core'
 import {ClientHeader} from '../../../_metronic/partials'
 
 import {useInvestiment} from '../../context/Investiment'
+import {useFirebase} from '../../context/Firebase'
+
 import {CreateAssetModal} from '../../../_metronic/partials/modals/create-asset/CreateAssetModal'
 
 import {AssetsTable} from '../../../_metronic/partials/widgets'
@@ -13,6 +15,7 @@ const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
   const {assets, queryAssets, queryCurrentClient} = useInvestiment()
+  const {registerEvent} = useFirebase()
 
   useEffect(() => {
     queryAssets()
@@ -22,11 +25,17 @@ const DashboardPage: FC = () => {
     queryCurrentClient()
   }, [assets])
 
+  const handleModal = () => {
+    registerEvent('open_asset_creation_modal')
+
+    setShowModal(true)
+  }
+
   return (
     <>
       <ClientHeader />
 
-      <AssetsTable className='mb-5 mb-xl-8' assets={assets} openModal={() => setShowModal(true)} />
+      <AssetsTable className='mb-5 mb-xl-8' assets={assets} openModal={handleModal} />
 
       <CreateAssetModal show={showModal} handleClose={() => setShowModal(false)} />
     </>

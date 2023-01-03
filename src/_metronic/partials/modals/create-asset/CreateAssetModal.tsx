@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState, useRef} from 'react'
+import {useRef} from 'react'
 import {createPortal} from 'react-dom'
-import {useNavigate} from 'react-router-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
@@ -17,6 +16,7 @@ import {
 } from '../../../../app/utils/formatters'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
+import {useFirebase} from '../../../../app/context/Firebase'
 
 type Props = {
   show: boolean
@@ -57,11 +57,9 @@ const dateFormatter = (value: string): string => {
 
 const CreateAssetModal = ({show, handleClose}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const [loading, setLoading] = useState(false)
 
   const {createAsset, currentClient} = useInvestiment()
-
-  const navigate = useNavigate()
+  const {registerEvent} = useFirebase()
 
   const closeModal = () => {
     handleClose()
@@ -72,7 +70,7 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
+      registerEvent('asset_form_submit')
 
       try {
         const params = {
@@ -85,12 +83,14 @@ const CreateAssetModal = ({show, handleClose}: Props) => {
 
         createAsset(params)
         closeModal()
-        navigate('/simulacoes')
+
+        registerEvent('asset_create')
       } catch (error) {
         console.error(error)
         setStatus('The registration details is incorrect')
         setSubmitting(false)
-        setLoading(false)
+
+        registerEvent('asset_create_error')
       }
     },
   })

@@ -1,8 +1,8 @@
-import {FC, createContext, useContext, useState, useEffect} from 'react'
+import {FC, createContext, useContext, useRef} from 'react'
 import {WithChildren} from '../../_metronic/helpers'
 
 import {FirebaseApp, initializeApp} from 'firebase/app'
-import {Analytics, getAnalytics} from 'firebase/analytics'
+import {Analytics, getAnalytics, logEvent} from 'firebase/analytics'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC-ORA7WiPrnzeH2mkn8mZqCM1djhyu17M',
@@ -14,27 +14,25 @@ const firebaseConfig = {
   measurementId: 'G-QXJ1N1R3Q4',
 }
 
-const FirebaseContext = createContext({})
+const initFirebaseContextPropsState = {
+  registerEvent: () => {},
+}
+
+const FirebaseContext = createContext<any>(initFirebaseContextPropsState)
 
 const useFirebase = () => {
   return useContext(FirebaseContext)
 }
 
 const FirebaseProvider: FC<WithChildren> = ({children}) => {
-  const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>()
-  const [analytics, setAnalytics] = useState<Analytics>()
+  const app = useRef<FirebaseApp>(initializeApp(firebaseConfig))
+  const analytics = useRef<Analytics>(getAnalytics(app.current))
 
-  useEffect(() => {
-    const app = initializeApp(firebaseConfig)
-    const firebaseAnalytics = getAnalytics(app)
+  const registerEvent = (event: string, params: {} | undefined): void => {
+    logEvent(analytics.current, event, params)
+  }
 
-    setFirebaseApp(app)
-    setAnalytics(firebaseAnalytics)
-  }, [])
-
-  return (
-    <FirebaseContext.Provider value={{firebaseApp, analytics}}>{children}</FirebaseContext.Provider>
-  )
+  return <FirebaseContext.Provider value={{registerEvent}}>{children}</FirebaseContext.Provider>
 }
 
 export {useFirebase, FirebaseProvider}

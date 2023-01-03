@@ -6,16 +6,25 @@ import {UserHeader} from '../../../_metronic/partials'
 import {ClientCard} from '../../../_metronic/partials/content/cards/ClientCard'
 
 import {useInvestiment} from '../../context/Investiment'
+import {useFirebase} from '../../context/Firebase'
+
 import {CreateClientModal} from '../../../_metronic/partials/modals/create-client/CreateClientModal'
 
 const DashboardPage: FC = () => {
   const [showModal, setShowModal] = useState(false)
 
   const {clients, queryClients} = useInvestiment()
+  const {registerEvent} = useFirebase()
 
   useEffect(() => {
     queryClients()
   }, [])
+
+  const handleModal = () => {
+    registerEvent('open_client_creation_modal')
+
+    setShowModal(true)
+  }
 
   return (
     <>
@@ -26,7 +35,7 @@ const DashboardPage: FC = () => {
 
         <div className='d-flex flex-wrap my-2'>
           <a
-            onClick={() => setShowModal(true)}
+            onClick={handleModal}
             className='btn btn-primary btn-sm'
             data-bs-toggle='modal'
             data-bs-target='#kt_modal_create_client'
@@ -38,17 +47,22 @@ const DashboardPage: FC = () => {
 
       <div className='row g-6 g-xl-9'>
         {clients.map(
-          (client: {
-            id: number
-            email: string
-            last_name: string
-            first_name: string
-            number_of_assets: number
-            total_in_custody: number
-          }): any => {
+          (
+            client: {
+              id: number
+              email: string
+              last_name: string
+              first_name: string
+              number_of_assets: number
+              total_in_custody: number
+            },
+            index: number
+          ): any => {
             return (
               <div className='col-md-6 col-xl-4'>
                 <ClientCard
+                  key={index}
+                  index={index}
                   id={client.id}
                   firstName={client?.first_name}
                   lastName={client?.last_name}

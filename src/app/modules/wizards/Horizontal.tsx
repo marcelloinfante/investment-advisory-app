@@ -1,8 +1,13 @@
 import {FC} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
+
+import {useFirebase} from '../../context/Firebase'
 
 const Horizontal: FC = () => {
+  const {registerEvent} = useFirebase()
+
   const {pathname} = useLocation()
+  const navigate = useNavigate()
 
   let clientsClassName = 'pending cursor-not-allowed'
   let assetsClassName = 'pending cursor-not-allowed'
@@ -62,24 +67,35 @@ const Horizontal: FC = () => {
       break
   }
 
+  const onClick = (link: string) => {
+    navigate(link)
+
+    registerEvent('header_navigate', {
+      step: link,
+    })
+  }
+
   return (
     <div className='stepper stepper-links d-flex flex-column pt-15'>
       <div className='stepper-nav'>
-        <Link to={clientsLink} className={`stepper-item ${clientsClassName}`}>
+        <a onClick={() => onClick(clientsLink)} className={`stepper-item ${clientsClassName}`}>
           <h3 className={`stepper-title ${clientsTitleClassName}`}>Escolher Cliente</h3>
-        </Link>
+        </a>
 
-        <Link to={assetsLink} className={`stepper-item ${assetsClassName}`}>
+        <a onClick={() => onClick(assetsLink)} className={`stepper-item ${assetsClassName}`}>
           <h3 className={`stepper-title ${assetsTitleClassName}`}>Escolher Ativo</h3>
-        </Link>
+        </a>
 
-        <Link to={simulationsLink} className={`stepper-item ${simulationsClassName}`}>
+        <a
+          onClick={() => onClick(simulationsLink)}
+          className={`stepper-item ${simulationsClassName}`}
+        >
           <h3 className={`stepper-title ${simulationsTitleClassName}`}>Criar Simulação</h3>
-        </Link>
+        </a>
 
-        <Link to={resultLink} className={`stepper-item ${resultsClassName}`}>
+        <a onClick={() => onClick(resultLink)} className={`stepper-item ${resultsClassName}`}>
           <h3 className={'stepper-title'}>Resultado</h3>
-        </Link>
+        </a>
       </div>
     </div>
   )

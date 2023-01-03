@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useRef} from 'react'
 import {createPortal} from 'react-dom'
-import {useNavigate} from 'react-router-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
@@ -22,6 +21,7 @@ import {
 } from '../../../../app/utils/formatters'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
+import {useFirebase} from '../../../../app/context/Firebase'
 
 type Props = {
   show: boolean
@@ -66,14 +66,15 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const stepper = useRef<StepperComponent | null>(null)
 
-  const navigate = useNavigate()
-
   const {currentClient, currentAsset, createSimulation} = useInvestiment()
+  const {registerEvent} = useFirebase()
 
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
+      registerEvent('simulation_form_submit')
+
       try {
         const params = {
           ...values,
@@ -92,11 +93,14 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
 
         createSimulation(params)
         closeModal()
-        navigate('/resultado')
+
+        registerEvent('simulation_create')
       } catch (error) {
         console.error(error)
         setStatus('The registration details is incorrect')
         setSubmitting(false)
+
+        registerEvent('simulation_create_error')
       }
     },
   })
@@ -126,6 +130,10 @@ const CreateSimulationModal = ({show, handleClose}: Props) => {
     if (isCurrentStepInvalid()) {
       return
     }
+
+    registerEvent('simulation_modal_next_step', {
+      step: stepper.current.getCurrentStepIndex(),
+    })
 
     stepper.current.goNext()
   }

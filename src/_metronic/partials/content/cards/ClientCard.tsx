@@ -3,10 +3,12 @@ import {FC} from 'react'
 import {Link} from 'react-router-dom'
 
 import {useInvestiment} from '../../../../app/context/Investiment'
+import {useFirebase} from '../../../../app/context/Firebase'
 
 import {currencyFormatter} from '../../../../app/utils/formatters'
 
 type Props = {
+  index: number
   id: number
   firstName: string
   lastName: string
@@ -16,6 +18,7 @@ type Props = {
 }
 
 const ClientCard: FC<Props> = ({
+  index,
   id,
   firstName,
   lastName,
@@ -24,8 +27,13 @@ const ClientCard: FC<Props> = ({
   totalInCustody,
 }) => {
   const {saveCurrentClient} = useInvestiment()
+  const {registerEvent} = useFirebase()
 
   const onClick = () => {
+    registerEvent('client_select', {
+      index_position: index,
+    })
+
     saveCurrentClient({
       id,
       email,
