@@ -6,12 +6,12 @@ const Error500: FC = () => {
   return (
     <>
       {/* begin::Title */}
-      <h1 className='fw-bolder fs-2qx text-gray-900 mb-4'>System Error</h1>
+      <h1 className='fw-bolder fs-2qx text-gray-900 mb-4'>Erro no sistema</h1>
       {/* end::Title */}
 
       {/* begin::Text */}
       <div className='fw-semibold fs-6 text-gray-500 mb-7'>
-        Something went wrong! Please try again later.
+        Algo deu errado! Por favor, tente novamente.
       </div>
       {/* end::Text */}
 
@@ -32,8 +32,8 @@ const Error500: FC = () => {
 
       {/* begin::Link */}
       <div className='mb-0'>
-        <Link to='/dashboard' className='btn btn-sm btn-primary'>
-          Return Home
+        <Link to='/clientes' className='btn btn-sm btn-primary'>
+          Retornar para página inicial
         </Link>
       </div>
       {/* end::Link */}

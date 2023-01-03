@@ -10,7 +10,7 @@ const Error404: FC = () => {
       {/* end::Title */}
 
       {/* begin::Text */}
-      <div className='fw-semibold fs-6 text-gray-500 mb-7'>We can't find that page.</div>
+      <div className='fw-semibold fs-6 text-gray-500 mb-7'>Página não encontrada.</div>
       {/* end::Text */}
 
       {/* begin::Illustration */}
@@ -30,8 +30,8 @@ const Error404: FC = () => {
 
       {/* begin::Link */}
       <div className='mb-0'>
-        <Link to='/dashboard' className='btn btn-sm btn-primary'>
-          Return Home
+        <Link to='/clientes' className='btn btn-sm btn-primary'>
+          Retornar para página inicial
         </Link>
       </div>
       {/* end::Link */}
