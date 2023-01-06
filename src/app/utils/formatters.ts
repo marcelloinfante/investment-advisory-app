@@ -17,8 +17,10 @@ export const percentualFormatter = (value: number): string => {
   return new Intl.NumberFormat('pt-BR', options).format(value)
 }
 
-export const dateFormatter = (dateInt: number) => {
-  const date = new Date(dateInt)
+export const dateFormatter = (dateInt: any) => {
+  const preFormattedDate = dateInt.replace(/-/g, '/').replace(/T.+/, '')
+  const date = new Date(preFormattedDate)
+
   const formatter = new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
     month: '2-digit',
